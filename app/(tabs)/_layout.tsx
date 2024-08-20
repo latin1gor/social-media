@@ -7,7 +7,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-
+  console.log("social-media, V0.0.1")
   return (
     <Tabs
       screenOptions={{
