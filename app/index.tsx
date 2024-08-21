@@ -1,12 +1,14 @@
-import {Text} from "react-native";
+import {Button, Text, View} from "react-native";
+import {router} from "expo-router";
 
 
 const HomeScreen = () => {
 
     return (
-        <Text>
-            Hello brouudie
-        </Text>
+        <View>
+            <Text>Home</Text>
+            <Button title={"welcome"} onPress={() => router.push('/welcome')} />
+        </View>
     )
 }
 
