@@ -1,4 +1,3 @@
-import {ScreenProps} from "react-native-screens";
 import {View} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {ReactNode} from "react";
