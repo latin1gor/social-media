@@ -12,10 +12,10 @@ export const theme = {
         roseLight: '#f87171',
     },
     fonts: {
-        medium: '500',
-        semibold: '600',
-        bold: '700',
-        extraBold: '800',
+        medium: 500,
+        semibold: 600,
+        bold: 700,
+        extraBold: 800,
     },
     radius: {
         xs: 10,
