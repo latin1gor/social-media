@@ -6,10 +6,10 @@ import ScreenWrapper from "@/components/ScreenWrapper";
 const HomeScreen = () => {
 
     return (
-        <View>
+        <ScreenWrapper>
             <Text>Home</Text>
             <Button title={"welcome"} onPress={() => router.push('/welcome')} />
-        </View>
+        </ScreenWrapper>
     )
 }
 

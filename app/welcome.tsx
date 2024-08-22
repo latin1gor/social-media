@@ -1,9 +1,11 @@
 import {Text} from "react-native";
+import ScreenWrapper from "@/components/ScreenWrapper";
 
 
 const Welcome = () => {
     return (
-        <Text>Welcome World!</Text>
+        <ScreenWrapper>
+        <Text>Welcome World!</Text></ScreenWrapper>
     )
 }
 
