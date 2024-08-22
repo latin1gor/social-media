@@ -4,16 +4,16 @@ import {ReactNode} from "react";
 
 interface IScreenWrapperProps {
     children: ReactNode;
-    bg: string
+    bg?: string
 }
 
 const ScreenWrapper = ({children, bg}: IScreenWrapperProps ) => {
 
     const { top } = useSafeAreaInsets()
-    const paddingTop = top > 0 ? top+5 : 30
+    const paddingTop = top > 0 ? top +5 : 30
 
     return (
-        <View style={{flex: 1, paddingTop, backgroundColor: bg}}>
+        <View style={{flex: 1, paddingTop, backgroundColor: bg || "white"}}>
             {children}
         </View>
     )
