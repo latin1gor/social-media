@@ -1,4 +1,4 @@
-import { Image, StatusBar, StyleSheet, Text, View} from "react-native";
+import {Image, Pressable, StatusBar, StyleSheet, Text, View} from "react-native";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import {hp, wp} from "@/helpers/common";
 import {theme} from "@/constants/theme";
@@ -18,7 +18,13 @@ const Welcome = () => {
                </View>
 
                <View style={styles.footer}>
-                   <Button title="Getting started" onPress={() => {}} buttonStyle={{marginHorizontal: wp(3)}} />
+                   <Button title="Getting started" onPress={() => {}} buttonStyle={{marginHorizontal: wp(3)}} loading={false}/>
+                   <View style={styles.bottomTextContainer}>
+                       <Text style={styles.loginText}>Already have an account ?</Text>
+                       <Pressable onPress={() => {}}>
+                           <Text style={[styles.loginText, {color: theme.colors.primaryDark, fontWeight: 'bold'}]}>Login</Text>
+                       </Pressable>
+                   </View>
                </View>
 
            </View>
@@ -57,5 +63,17 @@ const styles = StyleSheet.create({
     footer: {
         gap: 30,
         width: '100%'
+    },
+    bottomTextContainer: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 5
+    },
+    loginText: {
+        textAlign: 'center',
+        color: theme.colors.text,
+        fontSize: hp(1.7),
+
     }
 })

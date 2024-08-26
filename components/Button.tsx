@@ -9,7 +9,7 @@ interface IButtonProps {
     onPress?: () => void,
     buttonStyle?: any;
     loading: boolean;
-    hasShadow: boolean;
+    hasShadow?: boolean;
 }
 
 const Button = ({title='', buttonStyle, textStyle, onPress=()=>{}, loading = false, hasShadow = true}: IButtonProps ) => {
