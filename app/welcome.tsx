@@ -3,9 +3,13 @@ import ScreenWrapper from "@/components/ScreenWrapper";
 import {hp, wp} from "@/helpers/common";
 import {theme} from "@/constants/theme";
 import Button from "@/components/Button";
+import {useRouter} from "expo-router";
 
 
 const Welcome = () => {
+
+    const router = useRouter()
+
     return (
         <ScreenWrapper bg={"white"}>
             <StatusBar barStyle={"dark-content"} />
