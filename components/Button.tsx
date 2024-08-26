@@ -5,10 +5,11 @@ import Loading from "@/components/Loading";
 
 interface IButtonProps {
     textStyle?: any;
-    title?: string
+    title?: string;
     onPress?: () => void,
     buttonStyle?: any;
-    loading: boolean
+    loading: boolean;
+    hasShadow: boolean;
 }
 
 const Button = ({title='', buttonStyle, textStyle, onPress=()=>{}, loading = false, hasShadow = true}: IButtonProps ) => {
