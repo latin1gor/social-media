@@ -3,11 +3,8 @@ import ScreenWrapper from "@/components/ScreenWrapper";
 
 
 const Layout = () => {
-    return (
-        <ScreenWrapper>
-        <Stack screenOptions={{headerShown: false}} />
-        </ScreenWrapper>
-    )
+    return <Stack screenOptions={{headerShown: false}} />
+
 }
 
 export default Layout
