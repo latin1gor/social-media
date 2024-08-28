@@ -1,11 +1,16 @@
-import {Text, View} from "react-native";
+import {Text} from "react-native";
+import ScreenWrapper from "@/components/ScreenWrapper";
+import Home from "@/assets/icons/home";
+import {theme} from "@/constants/theme";
+import Icon from "@/assets/icons";
 
 
 const Login = () => {
     return (
-            <View>
+            <ScreenWrapper>
                 <Text>Login page </Text>
-            </View>
+                <Icon name={"home"} />
+            </ScreenWrapper>
     )
 }
 
