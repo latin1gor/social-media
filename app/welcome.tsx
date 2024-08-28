@@ -11,7 +11,7 @@ const Welcome = () => {
     const router = useRouter()
 
     return (
-        <ScreenWrapper bg={"white"}>
+        <ScreenWrapper>
             <StatusBar barStyle={"dark-content"} />
            <View style={styles.container}>
                 <Image source={require("../assets/images/welcome.png")} resizeMode={"contain"} style={styles.welcomeImage} />
@@ -22,10 +22,10 @@ const Welcome = () => {
                </View>
 
                <View style={styles.footer}>
-                   <Button title="Getting started" onPress={() => {}} buttonStyle={{marginHorizontal: wp(3)}} loading={false}/>
+                   <Button title="Getting started" onPress={() => router.push("/sign-up")} buttonStyle={{marginHorizontal: wp(3)}} loading={false}/>
                    <View style={styles.bottomTextContainer}>
                        <Text style={styles.loginText}>Already have an account ?</Text>
-                       <Pressable onPress={() => {}}>
+                       <Pressable onPress={() => router.push('/login')}>
                            <Text style={[styles.loginText, {color: theme.colors.primaryDark, fontWeight: 'bold'}]}>Login</Text>
                        </Pressable>
                    </View>
