@@ -7,9 +7,9 @@ import {theme} from "@/constants/theme";
 interface IIcons {
     home: (props: SvgProps) => React.JSX.Element
 }
-interface IProps {
+interface IProps extends SvgProps{
     name: keyof IIcons
-    props: SvgProps
+    size?: number
 }
 
 const icons: IIcons = {
