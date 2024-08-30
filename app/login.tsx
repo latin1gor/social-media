@@ -1,4 +1,4 @@
-import {StatusBar, StyleSheet, View} from "react-native";
+import {StatusBar, StyleSheet, Text, View} from "react-native";
 import ScreenWrapper from "@/components/screen-wrapper";
 import BackButton from "@/components/back-button";
 import {useRouter} from "expo-router";
@@ -13,6 +13,11 @@ const Login = () => {
             <StatusBar barStyle={"dark-content"}/>
             <View style={styles.container}>
                 <BackButton router={router}/>
+
+                <View>
+                    <Text style={styles.welcomeText}>Hey,</Text>
+                    <Text style={styles.welcomeText}>Welcome back!</Text>
+                </View>
             </View>
         </ScreenWrapper>
     )
@@ -29,7 +34,8 @@ const styles = StyleSheet.create({
     },
     welcomeText: {
         fontSize: hp(4),
-        fontWeight: 600, color: theme.colors.text,
+        fontWeight: "bold",
+        color: theme.colors.text,
     },
     form: {
         gap: 25,
