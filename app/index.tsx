@@ -1,6 +1,6 @@
 import {Button, Text, View} from "react-native";
 import {router} from "expo-router";
-import ScreenWrapper from "@/components/ScreenWrapper";
+import ScreenWrapper from "@/components/screen-wrapper";
 
 
 const HomeScreen = () => {

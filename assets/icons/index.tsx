@@ -3,9 +3,11 @@ import Home from "@/assets/icons/home";
 import React, {ReactNode} from "react";
 import {SvgProps} from "react-native-svg";
 import {theme} from "@/constants/theme";
+import ArrowLeft from "@/assets/icons/arrow-left";
 
 interface IIcons {
     home: (props: SvgProps) => React.JSX.Element
+    arrowLeft: (props: SvgProps) => React.JSX.Element
 }
 interface IProps extends SvgProps{
     name: keyof IIcons
@@ -13,7 +15,8 @@ interface IProps extends SvgProps{
 }
 
 const icons: IIcons = {
-    home: Home
+    home: Home,
+    arrowLeft: ArrowLeft
 }
 
 const Icon = ({name, ...props}: IProps) => {

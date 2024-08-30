@@ -1,5 +1,5 @@
 import {Stack} from "expo-router";
-import ScreenWrapper from "@/components/ScreenWrapper";
+import ScreenWrapper from "@/components/screen-wrapper";
 
 
 const Layout = () => {

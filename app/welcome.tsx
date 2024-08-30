@@ -1,8 +1,8 @@
 import {Image, Pressable, StatusBar, StyleSheet, Text, View} from "react-native";
-import ScreenWrapper from "@/components/ScreenWrapper";
+import ScreenWrapper from "@/components/screen-wrapper";
 import {hp, wp} from "@/helpers/common";
 import {theme} from "@/constants/theme";
-import Button from "@/components/Button";
+import Button from "@/components/button";
 import {useRouter} from "expo-router";
 
 
