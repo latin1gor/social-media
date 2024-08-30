@@ -1,7 +1,7 @@
 import {Pressable, StyleSheet, Text, View} from "react-native";
 import {theme} from "@/constants/theme";
 import {hp} from "@/helpers/common";
-import Loading from "@/components/Loading";
+import Loading from "@/components/loading";
 
 interface IButtonProps {
     textStyle?: any;

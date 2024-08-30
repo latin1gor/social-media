@@ -1,17 +1,26 @@
-import {Text} from "react-native";
-import ScreenWrapper from "@/components/ScreenWrapper";
-import Home from "@/assets/icons/home";
-import {theme} from "@/constants/theme";
+import {StatusBar, StyleSheet, Text, View} from "react-native";
+import ScreenWrapper from "@/components/screen-wrapper";
 import Icon from "@/assets/icons";
+import {theme} from "@/constants/theme";
+import BackButton from "@/components/back-button";
+import {useRouter} from "expo-router";
 
 
 const Login = () => {
+    const router = useRouter();
     return (
             <ScreenWrapper>
-                <Text>Login page </Text>
-                <Icon name={"home"} />
+                <StatusBar barStyle={"dark-content"} />
+                <View style={styles.container}>
+                    <BackButton />
+                </View>
             </ScreenWrapper>
     )
 }
 
 export default Login
+
+
+const styles = StyleSheet.create({
+
+})
