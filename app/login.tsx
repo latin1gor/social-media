@@ -6,10 +6,13 @@ import {hp, wp} from "@/helpers/common";
 import {theme} from "@/constants/theme";
 import Input from "@/components/input";
 import Icon from "@/assets/icons";
+import {useRef} from "react";
 
 
 const Login = () => {
     const router = useRouter();
+    const emailRef = useRef("");
+    const passwordRef = useRef("");
     return (
         <ScreenWrapper>
             <StatusBar barStyle={"dark-content"}/>
