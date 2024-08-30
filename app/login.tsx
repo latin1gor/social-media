@@ -20,7 +20,7 @@ const Login = () => {
                 </View>
 
                 <View style={styles.form}>
-
+                    <Text style={{fontSize: hp(1.5), color: theme.colors.text}}>Please login to continue</Text>
                 </View>
             </View>
         </ScreenWrapper>
