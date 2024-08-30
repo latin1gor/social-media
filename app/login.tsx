@@ -18,6 +18,10 @@ const Login = () => {
                     <Text style={styles.welcomeText}>Hey,</Text>
                     <Text style={styles.welcomeText}>Welcome back!</Text>
                 </View>
+
+                <View style={styles.form}>
+
+                </View>
             </View>
         </ScreenWrapper>
     )
