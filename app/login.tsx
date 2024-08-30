@@ -27,7 +27,9 @@ const Login = () => {
 
                 <View style={styles.form}>
                     <Text style={{fontSize: hp(1.5), color: theme.colors.text}}>Please login to continue</Text>
-                    <Input icon={<Icon name={"mail"} strokeWidth={1.6}/>} placeholder={'Enter your email'} onChangeText={value => {}} />
+                    <Input icon={<Icon name={"mail"} strokeWidth={1.6}/>} placeholder={'Enter your email'} onChangeText={(value: string) => emailRef.current = value} />
+                    <Input icon={<Icon name={"mail"} strokeWidth={1.6}/>} placeholder={'Enter your password'} onChangeText={(value: string) => passwordRef.current = value} />
+
                 </View>
             </View>
         </ScreenWrapper>
