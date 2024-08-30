@@ -4,10 +4,14 @@ import React, {ReactNode} from "react";
 import {SvgProps} from "react-native-svg";
 import {theme} from "@/constants/theme";
 import ArrowLeft from "@/assets/icons/arrow-left";
+import MailIcon from "@/assets/icons/mail";
+import LockIcon from "@/assets/icons/lock";
 
 interface IIcons {
     home: (props: SvgProps) => React.JSX.Element
-    arrowLeft: (props: SvgProps) => React.JSX.Element
+    arrowLeft: (props: SvgProps) => React.JSX.Element,
+    mail: (props: SvgProps) => React.JSX.Element,
+    lock: (props: SvgProps) => React.JSX.Element,
 }
 interface IProps extends SvgProps{
     name: keyof IIcons
@@ -16,7 +20,9 @@ interface IProps extends SvgProps{
 
 const icons: IIcons = {
     home: Home,
-    arrowLeft: ArrowLeft
+    arrowLeft: ArrowLeft,
+    mail: MailIcon,
+    lock: LockIcon
 }
 
 const Icon = ({name, ...props}: IProps) => {
