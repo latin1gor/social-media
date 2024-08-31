@@ -1,4 +1,4 @@
-import {StatusBar, StyleSheet, Text, View} from "react-native";
+import { StatusBar, StyleSheet, Text, View} from "react-native";
 import ScreenWrapper from "@/components/screen-wrapper";
 import BackButton from "@/components/back-button";
 import {useRouter} from "expo-router";
@@ -7,6 +7,7 @@ import {theme} from "@/constants/theme";
 import Input from "@/components/input";
 import Icon from "@/assets/icons";
 import {useRef, useState} from "react";
+import Button from "@/components/button";
 
 
 const Login = () => {
@@ -14,6 +15,11 @@ const Login = () => {
     const emailRef = useRef("");
     const passwordRef = useRef("");
     const [loading, setLoading] = useState(false);
+
+    const onSubmit = () => {
+
+    }
+
     return (
         <ScreenWrapper>
             <StatusBar barStyle={"dark-content"}/>
@@ -30,6 +36,7 @@ const Login = () => {
                     <Input icon={<Icon name={"mail"} strokeWidth={1.6}/>} placeholder={'Enter your email'} onChangeText={(value: string) => emailRef.current = value} />
                     <Input icon={<Icon name={"lock"} strokeWidth={1.6}/>} placeholder={'Enter your password'} onChangeText={(value: string) => passwordRef.current = value} secureTextEntry />
                     <Text style={styles.forgotPassword}>Forgot password ?</Text>
+                    <Button loading={loading} title={"Login"} onPress={onSubmit} />
                 </View>
             </View>
         </ScreenWrapper>
