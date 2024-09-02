@@ -1,4 +1,4 @@
-import {Pressable, StatusBar, StyleSheet, Text, View} from "react-native";
+import {Alert, Pressable, StatusBar, StyleSheet, Text, View} from "react-native";
 import ScreenWrapper from "@/components/screen-wrapper";
 import BackButton from "@/components/back-button";
 import {useRouter} from "expo-router";
@@ -17,7 +17,6 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
 
     const onSubmit = () => {
-
     }
 
     return (
@@ -43,7 +42,7 @@ const Login = () => {
                         Don't have an account ?
                     </Text>
                     <Pressable onPress={() => router.push("/sign-up")}>
-                        <Text style={[styles.footerText, {color: theme.colors.primary }]}>
+                        <Text style={[styles.footerText, {color: theme.colors.primaryDark, fontWeight: 'bold' }]}>
                         Sign up
                         </Text>
                     </Pressable>
