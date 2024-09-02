@@ -18,7 +18,7 @@ const SignUp = () => {
     const [loading, setLoading] = useState(false);
 
     const onSubmit = async () => {
-        if (!emailRef.current || !passwordRef.current) {
+        if (!emailRef.current || !passwordRef.current || usernameRef.current) {
             Alert.alert("Please enter a valid email address");
             return
         }
@@ -42,15 +42,15 @@ const SignUp = () => {
                     <Input icon={<Icon name={"mail"} strokeWidth={1.6}/>} placeholder={'Enter your email'} onChangeText={(value: string) => emailRef.current = value} />
                     <Input icon={<Icon name={"lock"} strokeWidth={1.6}/>} placeholder={'Enter your password'} onChangeText={(value: string) => passwordRef.current = value} secureTextEntry />
                     <Text style={styles.forgotPassword}>Forgot password ?</Text>
-                    <Button loading={loading} title={"Login"} onPress={onSubmit} />
+                    <Button loading={loading} title={"Register"} onPress={onSubmit} />
                 </View>
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>
-                        Don't have an account ?
+                        Already have an account !
                     </Text>
-                    <Pressable onPress={() => router.push("/sign-up")}>
+                    <Pressable onPress={() => router.push("/login")}>
                         <Text style={[styles.footerText, {color: theme.colors.primaryDark, fontWeight: 'bold' }]}>
-                            Sign up
+                            Login
                         </Text>
                     </Pressable>
                 </View>
