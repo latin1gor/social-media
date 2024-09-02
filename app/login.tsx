@@ -16,7 +16,12 @@ const Login = () => {
     const passwordRef = useRef("");
     const [loading, setLoading] = useState(false);
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
+        if (!emailRef.current || !passwordRef.current) {
+            Alert.alert("Please enter a valid email address");
+            return
+        }
+        // good to go
     }
 
     return (
