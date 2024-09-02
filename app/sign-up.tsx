@@ -38,7 +38,7 @@ const SignUp = () => {
 
                 <View style={styles.form}>
                     <Text style={{fontSize: hp(1.5), color: theme.colors.text}}>Please fill the details to create an account</Text>
-                    <Input icon={<Icon name={"mail"} strokeWidth={1.6}/>} placeholder={'Enter your name'} onChangeText={(value: string) => emailRef.current = value} />
+                    <Input icon={<Icon name={"user"} strokeWidth={1.6}/>} placeholder={'Enter your name'} onChangeText={(value: string) => emailRef.current = value} />
                     <Input icon={<Icon name={"mail"} strokeWidth={1.6}/>} placeholder={'Enter your email'} onChangeText={(value: string) => emailRef.current = value} />
                     <Input icon={<Icon name={"lock"} strokeWidth={1.6}/>} placeholder={'Enter your password'} onChangeText={(value: string) => passwordRef.current = value} secureTextEntry />
                     <Text style={styles.forgotPassword}>Forgot password ?</Text>
