@@ -6,12 +6,14 @@ import {theme} from "@/constants/theme";
 import ArrowLeft from "@/assets/icons/arrow-left";
 import MailIcon from "@/assets/icons/mail";
 import LockIcon from "@/assets/icons/lock";
+import UserIcon from "@/assets/icons/user";
 
 interface IIcons {
     home: (props: SvgProps) => React.JSX.Element
     arrowLeft: (props: SvgProps) => React.JSX.Element,
     mail: (props: SvgProps) => React.JSX.Element,
     lock: (props: SvgProps) => React.JSX.Element,
+    user: (props: SvgProps) => React.JSX.Element,
 }
 interface IProps extends SvgProps{
     name: keyof IIcons
@@ -22,7 +24,8 @@ const icons: IIcons = {
     home: Home,
     arrowLeft: ArrowLeft,
     mail: MailIcon,
-    lock: LockIcon
+    lock: LockIcon,
+    user: UserIcon
 }
 
 const Icon = ({name, ...props}: IProps) => {

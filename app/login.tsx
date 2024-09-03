@@ -1,4 +1,4 @@
-import { StatusBar, StyleSheet, Text, View} from "react-native";
+import {Alert, Pressable, StatusBar, StyleSheet, Text, View} from "react-native";
 import ScreenWrapper from "@/components/screen-wrapper";
 import BackButton from "@/components/back-button";
 import {useRouter} from "expo-router";
@@ -16,8 +16,12 @@ const Login = () => {
     const passwordRef = useRef("");
     const [loading, setLoading] = useState(false);
 
-    const onSubmit = () => {
-
+    const onSubmit = async () => {
+        if (!emailRef.current || !passwordRef.current) {
+            Alert.alert("Please enter a valid email address");
+            return
+        }
+        // good to go
     }
 
     return (
@@ -28,7 +32,7 @@ const Login = () => {
 
                 <View>
                     <Text style={styles.welcomeText}>Hey,</Text>
-                    <Text style={styles.welcomeText}>Welcome back!</Text>
+                    <Text style={styles.welcomeText}>Welcome back</Text>
                 </View>
 
                 <View style={styles.form}>
@@ -37,6 +41,16 @@ const Login = () => {
                     <Input icon={<Icon name={"lock"} strokeWidth={1.6}/>} placeholder={'Enter your password'} onChangeText={(value: string) => passwordRef.current = value} secureTextEntry />
                     <Text style={styles.forgotPassword}>Forgot password ?</Text>
                     <Button loading={loading} title={"Login"} onPress={onSubmit} />
+                </View>
+                <View style={styles.footer}>
+                    <Text style={styles.footerText}>
+                        Don't have an account ?
+                    </Text>
+                    <Pressable onPress={() => router.push("/sign-up")}>
+                        <Text style={[styles.footerText, {color: theme.colors.primaryDark, fontWeight: 'bold' }]}>
+                        Sign up
+                        </Text>
+                    </Pressable>
                 </View>
             </View>
         </ScreenWrapper>
