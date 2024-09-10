@@ -8,6 +8,7 @@ import Input from "@/components/input";
 import Icon from "@/assets/icons";
 import {useRef, useState} from "react";
 import Button from "@/components/button";
+import {supabase} from "@/lib/supabase";
 
 
 const SignUp = () => {
@@ -22,7 +23,28 @@ const SignUp = () => {
             Alert.alert("Please enter a valid email address");
             return
         }
-        // good to go
+        let name = usernameRef.current.trim();
+        let email = emailRef.current.trim();
+        let password = passwordRef.current.trim();
+
+        setLoading(true)
+
+        const {data: {session}, error} = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+                data: {
+                    name
+                }
+            }
+        })
+        setLoading(false)
+
+        console.log('current session', session)
+        console.log('error', error)
+        if (error) {
+            Alert.alert("Sign up", error.message)
+        }
     }
 
     return (
