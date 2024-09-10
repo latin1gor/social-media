@@ -2,7 +2,7 @@ import {createContext, PropsWithChildren, useState} from "react";
 import {User} from "@supabase/auth-js";
 
 
-const AuthContext = createContext({})
+export const AuthContext = createContext({})
 
 const AuthProvider = ({children}: PropsWithChildren) => {
     const [user, setUser] = useState<User | null>(null)
