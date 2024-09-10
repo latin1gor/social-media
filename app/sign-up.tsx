@@ -42,6 +42,9 @@ const SignUp = () => {
 
         console.log('current session', session)
         console.log('error', error)
+        if (error) {
+            Alert.alert("Sign up", error.message)
+        }
     }
 
     return (
