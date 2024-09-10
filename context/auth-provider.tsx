@@ -1,15 +1,26 @@
 import {createContext, PropsWithChildren, useState} from "react";
 import {User} from "@supabase/auth-js";
 
+interface IAuthContext {
+    user: User | null
+    setAuth: (user: User | null) => void
+    setUserData: (user: User | null) => void
+}
 
-export const AuthContext = createContext({})
+const defaultValue: IAuthContext = {
+    user: null,
+    setAuth: () => {},
+    setUserData: () => {},
+}
+
+export const AuthContext = createContext<IAuthContext>(defaultValue)
 
 const AuthProvider = ({children}: PropsWithChildren) => {
     const [user, setUser] = useState<User | null>(null)
 
-    const setAuth = (authUser: User) => setUser(authUser)
+    const setAuth = (authUser: User | null) => setUser(authUser)
 
-    const setUserData = (data: any) => setUser(prevUser => ({...prevUser, ...data}))
+    const setUserData = (data: User | null) => setUser(prevUser => ( prevUser ? {...prevUser, ...data} : data))
 
     return (
         <AuthContext.Provider value={{user, setAuth, setUserData}}>{children}</AuthContext.Provider>
