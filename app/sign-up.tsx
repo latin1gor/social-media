@@ -9,6 +9,7 @@ import Icon from "@/assets/icons";
 import {useRef, useState} from "react";
 import Button from "@/components/button";
 import {supabase} from "@/lib/supabase";
+import user from "@/assets/icons/user";
 
 
 const SignUp = () => {
@@ -19,7 +20,7 @@ const SignUp = () => {
     const [loading, setLoading] = useState(false);
 
     const onSubmit = async () => {
-        if (!emailRef.current || !passwordRef.current || usernameRef.current) {
+        if (!emailRef.current || !passwordRef.current || !usernameRef.current) {
             Alert.alert("Please enter a valid email address");
             return
         }
@@ -28,13 +29,13 @@ const SignUp = () => {
         let password = passwordRef.current.trim();
 
         setLoading(true)
-
+        console.log(name)
         const {data: {session}, error} = await supabase.auth.signUp({
             email,
             password,
             options: {
                 data: {
-                    name
+                    name: name
                 }
             }
         })
@@ -60,7 +61,7 @@ const SignUp = () => {
 
                 <View style={styles.form}>
                     <Text style={{fontSize: hp(1.5), color: theme.colors.text}}>Please fill the details to create an account</Text>
-                    <Input icon={<Icon name={"user"} strokeWidth={1.6}/>} placeholder={'Enter your name'} onChangeText={(value: string) => emailRef.current = value} />
+                    <Input icon={<Icon name={"user"} strokeWidth={1.6}/>} placeholder={'Enter your name'} onChangeText={(value: string) => usernameRef.current = value} />
                     <Input icon={<Icon name={"mail"} strokeWidth={1.6}/>} placeholder={'Enter your email'} onChangeText={(value: string) => emailRef.current = value} />
                     <Input icon={<Icon name={"lock"} strokeWidth={1.6}/>} placeholder={'Enter your password'} onChangeText={(value: string) => passwordRef.current = value} secureTextEntry />
                     <Text style={styles.forgotPassword}>Forgot password ?</Text>
