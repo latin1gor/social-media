@@ -4,6 +4,7 @@ import {useAuth} from "@/hooks/useAuth";
 import {useEffect} from "react";
 import {supabase} from "@/lib/supabase";
 import AuthProvider from "@/context/auth-provider";
+import {User} from "@supabase/auth-js";
 
 const _layout = () => {
 
@@ -26,6 +27,7 @@ const MainLayout = () => {
 
             if (session) {
                 setAuth(session?.user);
+                updateUserData(session?.user)
                 router.replace("/home");
             } else {
                 setAuth(null);
@@ -35,6 +37,9 @@ const MainLayout = () => {
         })
     }, [])
 
+    const updateUserData = async (user: User) => {
+
+    }
 
     return (
         <Stack screenOptions={{headerShown: false}} />
