@@ -7,6 +7,8 @@ import ArrowLeft from "@/assets/icons/arrow-left";
 import MailIcon from "@/assets/icons/mail";
 import LockIcon from "@/assets/icons/lock";
 import UserIcon from "@/assets/icons/user";
+import HeartIcon from "@/assets/icons/heart";
+import AddIcon from "@/assets/icons/add";
 
 interface IIcons {
     home: (props: SvgProps) => React.JSX.Element
@@ -14,7 +16,10 @@ interface IIcons {
     mail: (props: SvgProps) => React.JSX.Element,
     lock: (props: SvgProps) => React.JSX.Element,
     user: (props: SvgProps) => React.JSX.Element,
+    heart: (props: SvgProps) => React.JSX.Element,
+    add: (props: SvgProps) => React.JSX.Element,
 }
+
 interface IProps extends SvgProps{
     name: keyof IIcons
     size?: number
@@ -25,7 +30,9 @@ const icons: IIcons = {
     arrowLeft: ArrowLeft,
     mail: MailIcon,
     lock: LockIcon,
-    user: UserIcon
+    user: UserIcon,
+    heart: HeartIcon,
+    add: AddIcon,
 }
 
 const Icon = ({name, ...props}: IProps) => {
