@@ -6,6 +6,7 @@ import {hp, wp} from "@/helpers/common";
 import Icon from "@/assets/icons";
 import {useAuth} from "@/hooks/useAuth";
 import {useRouter} from "expo-router";
+import Avatar from "@/components/avatar";
 
 const Home = () => {
 
@@ -35,7 +36,7 @@ const Home = () => {
                             <Icon name={"add"} color={theme.colors.text} size={hp(3.2)} strokeWidth={2} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => router.push("/profile")}>
-                            <Icon name={"user"} color={theme.colors.text} size={hp(3.2)} strokeWidth={2} />
+                            <Avatar />
                         </TouchableOpacity>
                     </View>
                 </View>
