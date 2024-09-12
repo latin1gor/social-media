@@ -1,9 +1,10 @@
+import {View} from "react-native";
 
 const Profile = () => {
     return (
-        <div>
+        <View>
 
-        </div>
+        </View>
     );
 };
 

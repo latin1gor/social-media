@@ -1,6 +1,6 @@
 import {View} from "react-native";
 
-const Notifications = () => {
+const NewPost = () => {
     return (
         <View>
 
@@ -8,4 +8,4 @@ const Notifications = () => {
     );
 };
 
-export default Notifications;
+export default NewPost;

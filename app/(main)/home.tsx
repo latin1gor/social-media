@@ -4,9 +4,13 @@ import {supabase} from "@/lib/supabase";
 import {theme} from "@/constants/theme";
 import {hp, wp} from "@/helpers/common";
 import Icon from "@/assets/icons";
+import {useAuth} from "@/hooks/useAuth";
+import {useRouter} from "expo-router";
 
 const Home = () => {
-    console.log('created all of needed tables in supabase')
+
+    const { user } = useAuth()
+    const router = useRouter()
 
     const onLogout = async () => {
         const {error} = await supabase.auth.signOut()
@@ -24,13 +28,13 @@ const Home = () => {
                         LinkUp
                     </Text>
                     <View style={styles.icons}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => router.push("/notifications")}>
                         <Icon name={"heart"} color={theme.colors.text} size={hp(3.2)} strokeWidth={2} />
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => router.push("/new-post")}>
                             <Icon name={"add"} color={theme.colors.text} size={hp(3.2)} strokeWidth={2} />
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => router.push("/profile")}>
                             <Icon name={"user"} color={theme.colors.text} size={hp(3.2)} strokeWidth={2} />
                         </TouchableOpacity>
                     </View>
