@@ -3,7 +3,7 @@ import ScreenWrapper from "@/components/screen-wrapper";
 import {supabase} from "@/lib/supabase";
 
 const Home = () => {
-    console.log('created most of needed tables in supabase')
+    console.log('created all of needed tables in supabase')
 
     const onLogout = async () => {
         const { error } = await supabase.auth.signOut()
