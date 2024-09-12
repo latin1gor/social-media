@@ -2,6 +2,7 @@ import { hp } from "@/helpers/common";
 import { theme } from "@/constants/theme";
 import { Image } from "expo-image";
 import { StyleSheet } from "react-native";
+import { getUserImageSrc } from "@/services/imageService";
 
 interface IProps {
   uri: string;
@@ -18,7 +19,7 @@ const Avatar = ({
 }: IProps) => {
   return (
     <Image
-      source={{ uri }}
+      source={getUserImageSrc(uri)}
       transition={100}
       style={[
         styles.avatar,
