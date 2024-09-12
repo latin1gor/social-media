@@ -23,7 +23,7 @@ const Avatar = ({
       style={[
         styles.avatar,
         { height: size, width: size, borderRadius: rounded },
-        styles,
+        style,
       ]}
     />
   );
@@ -31,4 +31,10 @@ const Avatar = ({
 
 export default Avatar;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  avatar: {
+    borderCurve: "continuous",
+    borderColor: theme.colors.darkLight,
+    borderWidth: 1,
+  },
+});
