@@ -1,8 +1,9 @@
-import {Alert, Button, Text, View, StyleSheet} from "react-native";
+import {Alert, Button, Text, View, StyleSheet, TouchableOpacity} from "react-native";
 import ScreenWrapper from "@/components/screen-wrapper";
 import {supabase} from "@/lib/supabase";
 import {theme} from "@/constants/theme";
 import {hp, wp} from "@/helpers/common";
+import Icon from "@/assets/icons";
 
 const Home = () => {
     console.log('created all of needed tables in supabase')
@@ -17,7 +18,24 @@ const Home = () => {
 
     return (
         <ScreenWrapper>
-            <Text>Home</Text>
+            <View style={styles.container}>
+                <View style={styles.header}>
+                    <Text style={styles.title}>
+                        LinkUp
+                    </Text>
+                    <View style={styles.icons}>
+                        <TouchableOpacity>
+                        <Icon name={"heart"} color={theme.colors.text} size={hp(3.2)} strokeWidth={2} />
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Icon name={"add"} color={theme.colors.text} size={hp(3.2)} strokeWidth={2} />
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Icon name={"user"} color={theme.colors.text} size={hp(3.2)} strokeWidth={2} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
             <Button title={"Log out"} onPress={onLogout}/>
         </ScreenWrapper>
     );
@@ -42,7 +60,7 @@ const styles = StyleSheet.create({
     title: {
         color: theme.colors.text,
         fontSize: hp(3.2),
-        fontWeight: '900',
+        fontWeight: '800',
     },
     avatarImage: {
         height: hp(4.3),
@@ -52,7 +70,12 @@ const styles = StyleSheet.create({
         borderColor: theme.colors.gray,
         borderWidth: 3
     },
-
+    icons: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 15,
+    },
     listStyle: {
         paddingTop: 20,
         paddingHorizontal: wp(4)
