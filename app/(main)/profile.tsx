@@ -8,9 +8,11 @@ import { User } from "@supabase/auth-js";
 import { theme } from "@/constants/theme";
 import Icon from "@/assets/icons";
 import { supabase } from "@/lib/supabase";
+import Avatar from "@/components/avatar";
+import { ICustomUser } from "@/context/auth-provider";
 
 interface IUserHeaderProps {
-  user: User | null;
+  user: ICustomUser | null;
   router: Router;
   handleLogout: () => void;
 }
@@ -59,6 +61,10 @@ const UserHeader = ({ user, router, handleLogout }: IUserHeaderProps) => {
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Icon name={"logout"} color={"red"} />
         </TouchableOpacity>
+      </View>
+
+      <View style={styles.container}>
+        <View style={{ gap: 15 }}></View>
       </View>
     </View>
   );
