@@ -1,6 +1,5 @@
-import { View } from "react-native";
 import Home from "@/assets/icons/home";
-import React, { ReactNode } from "react";
+import React from "react";
 import { SvgProps } from "react-native-svg";
 import { theme } from "@/constants/theme";
 import ArrowLeft from "@/assets/icons/arrow-left";
@@ -10,6 +9,7 @@ import UserIcon from "@/assets/icons/user";
 import HeartIcon from "@/assets/icons/heart";
 import AddIcon from "@/assets/icons/add";
 import LogoutIcon from "@/assets/icons/logout";
+import EditIcon from "@/assets/icons/edit";
 
 interface IIcons {
   home: (props: SvgProps) => React.JSX.Element;
@@ -20,6 +20,7 @@ interface IIcons {
   heart: (props: SvgProps) => React.JSX.Element;
   add: (props: SvgProps) => React.JSX.Element;
   logout: (props: SvgProps) => React.JSX.Element;
+  edit: (props: SvgProps) => React.JSX.Element;
 }
 
 interface IProps extends SvgProps {
@@ -36,6 +37,7 @@ const icons: IIcons = {
   heart: HeartIcon,
   add: AddIcon,
   logout: LogoutIcon,
+  edit: EditIcon,
 };
 
 const Icon = ({ name, ...props }: IProps) => {
