@@ -1,9 +1,15 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "expo-router";
+import { Router, useRouter } from "expo-router";
 import ScreenWrapper from "@/components/screen-wrapper";
 import Header from "@/components/Header";
 import { wp } from "@/helpers/common";
+import { User } from "@supabase/auth-js";
+
+interface IUserHeaderProps {
+  user: User | null;
+  router: Router;
+}
 
 const Profile = () => {
   const { user, setAuth } = useAuth();
@@ -17,7 +23,7 @@ const Profile = () => {
   );
 };
 
-const UserHeader = ({ user, router }) => {
+const UserHeader = ({ user, router }: IUserHeaderProps) => {
   const handleLogout = async () => {};
 
   return (
