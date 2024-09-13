@@ -87,6 +87,7 @@ const UserHeader = ({ user, router, handleLogout }: IUserHeaderProps) => {
 
           <View style={{ alignItems: "center", gap: 4 }}>
             <Text style={styles.userName}>{user?.name}</Text>
+            <Text style={styles.infoText}>{user?.address}</Text>
           </View>
         </View>
       </View>
