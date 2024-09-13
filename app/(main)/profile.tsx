@@ -57,7 +57,7 @@ const UserHeader = ({ user, router, handleLogout }: IUserHeaderProps) => {
       style={{ flex: 1, backgroundColor: "white", paddingHorizontal: wp(4) }}
     >
       <View>
-        <Header title={"Profile"} showBackButton />
+        <Header title={"Profile"} showBackButton mb={25} />
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Icon name={"logout"} color={"red"} />
         </TouchableOpacity>
@@ -65,7 +65,13 @@ const UserHeader = ({ user, router, handleLogout }: IUserHeaderProps) => {
 
       <View style={styles.container}>
         <View style={{ gap: 15 }}>
-          <Avatar uri={user?.image} />
+          <View style={styles.avatarContainer}>
+            <Avatar
+              uri={user?.image}
+              size={hp(12)}
+              rounded={theme.radius.xl * 3.4}
+            />
+          </View>
         </View>
       </View>
     </View>
