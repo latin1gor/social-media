@@ -6,6 +6,7 @@ export interface ICustomUser extends User {
   address?: string;
   name?: string;
   phoneNumber?: string;
+  bio?: string;
 }
 
 interface IAuthContext {
