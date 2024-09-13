@@ -104,6 +104,10 @@ const UserHeader = ({ user, router, handleLogout }: IUserHeaderProps) => {
               </View>
             </View>
           )}
+
+          {user && user?.bio && (
+            <Text style={styles.infoText}>{user?.bio}</Text>
+          )}
         </View>
       </View>
     </View>
