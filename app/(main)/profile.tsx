@@ -89,6 +89,13 @@ const UserHeader = ({ user, router, handleLogout }: IUserHeaderProps) => {
             <Text style={styles.userName}>{user?.name}</Text>
             <Text style={styles.infoText}>{user?.address}</Text>
           </View>
+
+          <View style={{ gap: 15 }}>
+            <View style={styles.info}>
+              <Icon name={"mail"} size={20} color={theme.colors.textLight} />
+              <Text style={styles.infoText}>{user?.email}</Text>
+            </View>
+          </View>
         </View>
       </View>
     </View>
