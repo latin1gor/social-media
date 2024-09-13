@@ -10,6 +10,7 @@ import HeartIcon from "@/assets/icons/heart";
 import AddIcon from "@/assets/icons/add";
 import LogoutIcon from "@/assets/icons/logout";
 import EditIcon from "@/assets/icons/edit";
+import PhoneIcon from "@/assets/icons/phone";
 
 interface IIcons {
   home: (props: SvgProps) => React.JSX.Element;
@@ -21,6 +22,7 @@ interface IIcons {
   add: (props: SvgProps) => React.JSX.Element;
   logout: (props: SvgProps) => React.JSX.Element;
   edit: (props: SvgProps) => React.JSX.Element;
+  phone: (props: SvgProps) => React.JSX.Element;
 }
 
 interface IProps extends SvgProps {
@@ -38,6 +40,7 @@ const icons: IIcons = {
   add: AddIcon,
   logout: LogoutIcon,
   edit: EditIcon,
+  phone: PhoneIcon,
 };
 
 const Icon = ({ name, ...props }: IProps) => {
