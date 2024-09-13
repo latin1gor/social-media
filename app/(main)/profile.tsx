@@ -11,7 +11,6 @@ import { Router, useRouter } from "expo-router";
 import ScreenWrapper from "@/components/screen-wrapper";
 import Header from "@/components/Header";
 import { hp, wp } from "@/helpers/common";
-import { User } from "@supabase/auth-js";
 import { theme } from "@/constants/theme";
 import Icon from "@/assets/icons";
 import { supabase } from "@/lib/supabase";

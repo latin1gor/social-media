@@ -3,6 +3,8 @@ import { User } from "@supabase/auth-js";
 
 export interface ICustomUser extends User {
   image?: string;
+  address?: string;
+  name?: string;
 }
 
 interface IAuthContext {
