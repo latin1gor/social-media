@@ -1,13 +1,5 @@
-import {
-  Alert,
-  Button,
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { Button, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import ScreenWrapper from "@/components/screen-wrapper";
-import { supabase } from "@/lib/supabase";
 import { theme } from "@/constants/theme";
 import { hp, wp } from "@/helpers/common";
 import Icon from "@/assets/icons";
@@ -18,14 +10,6 @@ import Avatar from "@/components/avatar";
 const Home = () => {
   const { user } = useAuth();
   const router = useRouter();
-
-  const onLogout = async () => {
-    const { error } = await supabase.auth.signOut();
-
-    if (error) {
-      Alert.alert("Sign out", "Error signing out");
-    }
-  };
 
   return (
     <ScreenWrapper>
@@ -55,7 +39,6 @@ const Home = () => {
           </View>
         </View>
       </View>
-      <Button title={"Log out"} onPress={onLogout} />
     </ScreenWrapper>
   );
 };

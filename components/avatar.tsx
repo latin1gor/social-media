@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native";
 import { getUserImageSrc } from "@/services/imageService";
 
 interface IProps {
-  uri: string;
+  uri: string | undefined;
   size?: number;
   rounded?: number;
   style?: any;
