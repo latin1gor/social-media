@@ -6,12 +6,43 @@ import Header from "@/components/Header";
 import { Image } from "expo-image";
 import { getUserImageSrc } from "@/services/imageService";
 import { useAuth } from "@/hooks/useAuth";
-import { Icon } from "@rneui/base";
+import Input from "@/components/input";
+import Icon from "@/assets/icons";
+import { useEffect, useState } from "react";
+
+interface IUserState {
+  name: string;
+  phoneNumber: string;
+  image: string | null;
+  bio: string;
+  address: string;
+}
+
+const defaultValue: IUserState = {
+  name: "",
+  phoneNumber: "",
+  image: null,
+  bio: "",
+  address: "",
+};
 
 const EditProfile = () => {
-  const { user } = useAuth();
+  const [user, setUser] = useState<IUserState>(defaultValue);
+  const { user: currentUser } = useAuth();
 
-  const imageSource = getUserImageSrc(user?.image);
+  useEffect(() => {
+    if (currentUser) {
+      setUser({
+        name: currentUser?.name || "",
+        phoneNumber: currentUser?.phoneNumber || "",
+        image: currentUser?.image || "",
+        bio: currentUser?.bio || "",
+        address: currentUser?.address || "",
+      });
+    }
+  }, [currentUser]);
+
+  const imageSource = getUserImageSrc(currentUser?.image);
 
   return (
     <ScreenWrapper>
@@ -30,6 +61,14 @@ const EditProfile = () => {
             <Text style={{ fontSize: hp(1.5), color: theme.colors.text }}>
               Please fill your profile details
             </Text>
+            <Input
+              icon={<Icon name={"user"} />}
+              placeholder={"Enter your name"}
+              value={user.name}
+              onChangeText={(text) =>
+                setUser((prevState) => ({ ...prevState, name: text }))
+              }
+            />
           </View>
         </ScrollView>
       </View>
