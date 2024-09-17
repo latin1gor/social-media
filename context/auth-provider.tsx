@@ -11,8 +11,14 @@ export interface ICustomUser extends User {
 
 interface IAuthContext {
   user: ICustomUser | null;
-  setAuth: (user: User | null) => void;
-  setUserData: (user: User | null) => void;
+  setAuth: (user: ICustomUser | null) => void;
+  setUserData: (user: {
+    image: string | null;
+    phoneNumber: string;
+    address: string;
+    name: string;
+    bio: string;
+  }) => void;
 }
 
 const defaultValue: IAuthContext = {
@@ -24,11 +30,11 @@ const defaultValue: IAuthContext = {
 export const AuthContext = createContext<IAuthContext>(defaultValue);
 
 const AuthProvider = ({ children }: PropsWithChildren) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<ICustomUser | null>(null);
 
-  const setAuth = (authUser: User | null) => setUser(authUser);
+  const setAuth = (authUser: ICustomUser | null) => setUser(authUser);
 
-  const setUserData = (data: User | null) =>
+  const setUserData = (data: ICustomUser | null) =>
     setUser((prevUser) => (prevUser ? { ...prevUser, ...data } : data));
 
   return (
