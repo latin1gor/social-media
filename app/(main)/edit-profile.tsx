@@ -1,4 +1,11 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { hp, wp } from "@/helpers/common";
 import { theme } from "@/constants/theme";
 import ScreenWrapper from "@/components/screen-wrapper";
@@ -6,12 +13,71 @@ import Header from "@/components/Header";
 import { Image } from "expo-image";
 import { getUserImageSrc } from "@/services/imageService";
 import { useAuth } from "@/hooks/useAuth";
-import { Icon } from "@rneui/base";
+import Input from "@/components/input";
+import Icon from "@/assets/icons";
+import { useEffect, useState } from "react";
+import { LocateIcon, MapPin } from "lucide-react-native";
+import Button from "@/components/button";
+import loading from "@/components/loading";
+import { updateUser } from "@/services/userService";
+import { useRouter } from "expo-router";
+
+interface IUserState {
+  name: string;
+  phoneNumber: string;
+  image: string | null;
+  bio: string;
+  address: string;
+}
+
+const defaultValue: IUserState = {
+  name: "",
+  phoneNumber: "",
+  image: null,
+  bio: "",
+  address: "",
+};
 
 const EditProfile = () => {
-  const { user } = useAuth();
+  const [user, setUser] = useState<IUserState>(defaultValue);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const imageSource = getUserImageSrc(user?.image);
+  const { user: currentUser, setUserData } = useAuth();
+
+  useEffect(() => {
+    if (currentUser) {
+      setUser({
+        name: currentUser?.name || "",
+        phoneNumber: currentUser?.phoneNumber || "",
+        image: currentUser?.image || "",
+        bio: currentUser?.bio || "",
+        address: currentUser?.address || "",
+      });
+    }
+  }, [currentUser]);
+
+  const imageSource = getUserImageSrc(currentUser?.image);
+
+  const onImagePick = async () => {};
+
+  const onSubmit = async () => {
+    const userData = { ...user };
+    const { name, bio, address, phoneNumber, image } = userData;
+    if (!name || !bio || !address || !phoneNumber) {
+      Alert.alert("Edit profile", "Please fill all the fields");
+      return;
+    }
+    setLoading(true);
+    // update user
+    const res = await updateUser(currentUser?.id as string, userData);
+    setLoading(false);
+
+    if (res.success) {
+      setUserData({ ...currentUser, ...userData });
+      router.back();
+    }
+  };
 
   return (
     <ScreenWrapper>
@@ -30,6 +96,41 @@ const EditProfile = () => {
             <Text style={{ fontSize: hp(1.5), color: theme.colors.text }}>
               Please fill your profile details
             </Text>
+            <Input
+              icon={<Icon name={"user"} />}
+              placeholder={"Enter your name"}
+              value={user.name}
+              onChangeText={(text) =>
+                setUser((prevState) => ({ ...prevState, name: text }))
+              }
+            />
+            <Input
+              icon={<Icon name={"phone"} />}
+              placeholder={"Enter your number"}
+              value={user.phoneNumber}
+              onChangeText={(text) =>
+                setUser((prevState) => ({ ...prevState, phoneNumber: text }))
+              }
+            />
+            <Input
+              icon={<MapPin color={"gray"} />}
+              placeholder={"Enter your address"}
+              value={user.address}
+              onChangeText={(text) =>
+                setUser((prevState) => ({ ...prevState, address: text }))
+              }
+            />
+            <Input
+              placeholder={"Enter your bio"}
+              multiline
+              value={user.bio}
+              containerStyles={styles.bio}
+              onChangeText={(text) =>
+                setUser((prevState) => ({ ...prevState, bio: text }))
+              }
+            />
+
+            <Button title={"Update"} loading={loading} onPress={onSubmit} />
           </View>
         </ScrollView>
       </View>
@@ -83,7 +184,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderWidth: 0.4,
     borderColor: theme.colors.text,
-    borderRadius: theme.radius.xxl,
+    borderRadius: theme.radius.xl,
     borderCurve: "continuous",
     padding: 17,
     paddingHorizontal: 20,
