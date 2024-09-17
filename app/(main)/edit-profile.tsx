@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderWidth: 0.4,
     borderColor: theme.colors.text,
-    borderRadius: theme.radius.xxl,
+    borderRadius: theme.radius.xl,
     borderCurve: "continuous",
     padding: 17,
     paddingHorizontal: 20,
