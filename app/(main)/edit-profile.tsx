@@ -9,6 +9,7 @@ import { useAuth } from "@/hooks/useAuth";
 import Input from "@/components/input";
 import Icon from "@/assets/icons";
 import { useEffect, useState } from "react";
+import { LocateIcon, MapPin } from "lucide-react-native";
 
 interface IUserState {
   name: string;
@@ -75,6 +76,14 @@ const EditProfile = () => {
               value={user.phoneNumber}
               onChangeText={(text) =>
                 setUser((prevState) => ({ ...prevState, phoneNumber: text }))
+              }
+            />
+            <Input
+              icon={<MapPin color={"gray"} />}
+              placeholder={"Enter your address"}
+              value={user.address}
+              onChangeText={(text) =>
+                setUser((prevState) => ({ ...prevState, address: text }))
               }
             />
           </View>
