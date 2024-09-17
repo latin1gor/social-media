@@ -1,12 +1,34 @@
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { hp, wp } from "@/helpers/common";
 import { theme } from "@/constants/theme";
+import ScreenWrapper from "@/components/screen-wrapper";
+import Header from "@/components/Header";
+import { Image } from "expo-image";
+import { getUserImageSrc } from "@/services/imageService";
+import { useAuth } from "@/hooks/useAuth";
+import Avatar from "@/components/avatar";
+import avatar from "@/components/avatar";
 
 const EditProfile = () => {
+  const { user } = useAuth();
+
+  const imageSource = getUserImageSrc(user?.image);
+
   return (
-    <View>
-      <Text>Edit Profile</Text>
-    </View>
+    <ScreenWrapper>
+      <View style={styles.container}>
+        <ScrollView style={{ flex: 1 }}>
+          <Header title={"Edit profile"} />
+
+          {/*form*/}
+          <View style={styles.form}>
+            <View style={styles.avatarContainer}>
+              <Image source={imageSource} style={styles.avatar} />
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+    </ScreenWrapper>
   );
 };
 
@@ -27,7 +49,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: "100%",
     height: "100%",
-    borderRadius: theme.radius.xxl * 1.8,
+    borderRadius: theme.radius.xl * 1.8,
     borderCurve: "continuous",
     borderWidth: 1,
     borderColor: theme.colors.darkLight,
