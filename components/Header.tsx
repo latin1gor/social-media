@@ -10,7 +10,7 @@ interface IHeaderProps {
   mb?: number;
 }
 
-const Header = ({ title, showBackButton = false, mb = 10 }: IHeaderProps) => {
+const Header = ({ title, showBackButton = true, mb = 10 }: IHeaderProps) => {
   const router = useRouter();
   return (
     <View style={[styles.container, { marginBottom: mb }]}>

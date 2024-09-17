@@ -22,7 +22,7 @@ const Home = () => {
                 name={"heart"}
                 color={theme.colors.text}
                 size={hp(3.2)}
-                strokeWidth={2}
+                strokeWidth={2.5}
               />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => router.push("/new-post")}>
