@@ -86,6 +86,15 @@ const EditProfile = () => {
                 setUser((prevState) => ({ ...prevState, address: text }))
               }
             />
+            <Input
+              placeholder={"Enter your bio"}
+              multiline
+              value={user.bio}
+              containerStyles={styles.bio}
+              onChangeText={(text) =>
+                setUser((prevState) => ({ ...prevState, bio: text }))
+              }
+            />
           </View>
         </ScrollView>
       </View>
