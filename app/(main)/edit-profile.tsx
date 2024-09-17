@@ -6,8 +6,6 @@ import Header from "@/components/Header";
 import { Image } from "expo-image";
 import { getUserImageSrc } from "@/services/imageService";
 import { useAuth } from "@/hooks/useAuth";
-import Avatar from "@/components/avatar";
-import avatar from "@/components/avatar";
 
 const EditProfile = () => {
   const { user } = useAuth();
