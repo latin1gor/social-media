@@ -19,6 +19,8 @@ import { useEffect, useState } from "react";
 import { LocateIcon, MapPin } from "lucide-react-native";
 import Button from "@/components/button";
 import loading from "@/components/loading";
+import { updateUser } from "@/services/userService";
+import { useRouter } from "expo-router";
 
 interface IUserState {
   name: string;
@@ -39,7 +41,9 @@ const defaultValue: IUserState = {
 const EditProfile = () => {
   const [user, setUser] = useState<IUserState>(defaultValue);
   const [loading, setLoading] = useState(false);
-  const { user: currentUser } = useAuth();
+  const router = useRouter();
+
+  const { user: currentUser, setUserData } = useAuth();
 
   useEffect(() => {
     if (currentUser) {
@@ -66,6 +70,13 @@ const EditProfile = () => {
     }
     setLoading(true);
     // update user
+    const res = await updateUser(currentUser?.id as string, userData);
+    setLoading(false);
+
+    if (res.success) {
+      setUserData({ ...currentUser, ...userData });
+      router.back();
+    }
   };
 
   return (
