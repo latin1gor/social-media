@@ -1,4 +1,11 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { hp, wp } from "@/helpers/common";
 import { theme } from "@/constants/theme";
 import ScreenWrapper from "@/components/screen-wrapper";
@@ -10,6 +17,8 @@ import Input from "@/components/input";
 import Icon from "@/assets/icons";
 import { useEffect, useState } from "react";
 import { LocateIcon, MapPin } from "lucide-react-native";
+import Button from "@/components/button";
+import loading from "@/components/loading";
 
 interface IUserState {
   name: string;
@@ -29,6 +38,7 @@ const defaultValue: IUserState = {
 
 const EditProfile = () => {
   const [user, setUser] = useState<IUserState>(defaultValue);
+  const [loading, setLoading] = useState(false);
   const { user: currentUser } = useAuth();
 
   useEffect(() => {
@@ -44,6 +54,19 @@ const EditProfile = () => {
   }, [currentUser]);
 
   const imageSource = getUserImageSrc(currentUser?.image);
+
+  const onImagePick = async () => {};
+
+  const onSubmit = async () => {
+    const userData = { ...user };
+    const { name, bio, address, phoneNumber, image } = userData;
+    if (!name || !bio || !address || !phoneNumber) {
+      Alert.alert("Edit profile", "Please fill all the fields");
+      return;
+    }
+    setLoading(true);
+    // update user
+  };
 
   return (
     <ScreenWrapper>
@@ -95,6 +118,8 @@ const EditProfile = () => {
                 setUser((prevState) => ({ ...prevState, bio: text }))
               }
             />
+
+            <Button title={"Update"} loading={loading} onPress={onSubmit} />
           </View>
         </ScrollView>
       </View>
