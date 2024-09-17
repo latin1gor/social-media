@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { hp, wp } from "@/helpers/common";
 import { theme } from "@/constants/theme";
 import ScreenWrapper from "@/components/screen-wrapper";
@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import { Image } from "expo-image";
 import { getUserImageSrc } from "@/services/imageService";
 import { useAuth } from "@/hooks/useAuth";
+import { Icon } from "@rneui/base";
 
 const EditProfile = () => {
   const { user } = useAuth();
@@ -22,7 +23,13 @@ const EditProfile = () => {
           <View style={styles.form}>
             <View style={styles.avatarContainer}>
               <Image source={imageSource} style={styles.avatar} />
+              <Pressable style={styles.cameraIcon}>
+                <Icon name={"camera"} size={25} />
+              </Pressable>
             </View>
+            <Text style={{ fontSize: hp(1.5), color: theme.colors.text }}>
+              Please fill your profile details
+            </Text>
           </View>
         </ScrollView>
       </View>
@@ -57,7 +64,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     right: -10,
-    padding: 0,
+    padding: 8,
     borderRadius: 50,
     backgroundColor: "white",
     shadowColor: theme.colors.textLight,
