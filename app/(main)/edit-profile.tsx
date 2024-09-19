@@ -16,9 +16,8 @@ import { useAuth } from "@/hooks/useAuth";
 import Input from "@/components/input";
 import Icon from "@/assets/icons";
 import { useEffect, useState } from "react";
-import { LocateIcon, MapPin } from "lucide-react-native";
+import { MapPin } from "lucide-react-native";
 import Button from "@/components/button";
-import loading from "@/components/loading";
 import { updateUser } from "@/services/userService";
 import { useRouter } from "expo-router";
 
