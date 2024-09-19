@@ -15,6 +15,9 @@ export const uploadFile = async (
 ) => {
   try {
     const fileName = getFilePath(folderName, isImage);
+    const fileBase64 = await FileSystem.readAsStringAsync(fileUri, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
   } catch (e) {
     console.log("File upload error: ", e);
     return { success: false, msg: "Could not upload media" };
