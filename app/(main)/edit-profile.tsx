@@ -11,7 +11,7 @@ import { theme } from "@/constants/theme";
 import ScreenWrapper from "@/components/screen-wrapper";
 import Header from "@/components/Header";
 import { Image } from "expo-image";
-import { getUserImageSrc } from "@/services/imageService";
+import { getUserImageSrc, uploadFile } from "@/services/imageService";
 import { useAuth } from "@/hooks/useAuth";
 import Input from "@/components/input";
 import Icon from "@/assets/icons";
@@ -21,13 +21,11 @@ import Button from "@/components/button";
 import { updateUser } from "@/services/userService";
 import { useRouter } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
-import { ICustomUser } from "@/context/auth-provider";
-import ExpoImage from "expo-image/build/ExpoImage";
 
 interface IUserState {
   name: string;
   phoneNumber: string;
-  image: string | null;
+  image: string | null | undefined;
   bio: string;
   address: string;
 }
@@ -75,11 +73,17 @@ const EditProfile = () => {
   const onSubmit = async () => {
     const userData = { ...user };
     const { name, bio, address, phoneNumber, image } = userData;
-    if (!name || !bio || !address || !phoneNumber) {
+    if (!name || !bio || !address || !phoneNumber || !image) {
       Alert.alert("Edit profile", "Please fill all the fields");
       return;
     }
     setLoading(true);
+
+    if (typeof image === "object") {
+      const imageRes = await uploadFile("profiles", image?.uri, true);
+      if (imageRes.success) userData.image = imageRes.data;
+      else userData.image = null;
+    }
     // update user
     const res = await updateUser(currentUser?.id as string, userData);
     setLoading(false);
@@ -91,9 +95,9 @@ const EditProfile = () => {
   };
 
   let imageSource =
-    user?.image && typeof user?.image === "object"
+    user.image && typeof user.image === "object"
       ? user?.image?.uri
-      : getUserImageSrc(currentUser?.image);
+      : getUserImageSrc(user.image);
 
   return (
     <ScreenWrapper>
