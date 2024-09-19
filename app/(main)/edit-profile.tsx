@@ -11,21 +11,21 @@ import { theme } from "@/constants/theme";
 import ScreenWrapper from "@/components/screen-wrapper";
 import Header from "@/components/Header";
 import { Image } from "expo-image";
-import { getUserImageSrc } from "@/services/imageService";
+import { getUserImageSrc, uploadFile } from "@/services/imageService";
 import { useAuth } from "@/hooks/useAuth";
 import Input from "@/components/input";
 import Icon from "@/assets/icons";
 import { useEffect, useState } from "react";
-import { LocateIcon, MapPin } from "lucide-react-native";
+import { MapPin } from "lucide-react-native";
 import Button from "@/components/button";
-import loading from "@/components/loading";
 import { updateUser } from "@/services/userService";
 import { useRouter } from "expo-router";
+import * as ImagePicker from "expo-image-picker";
 
 interface IUserState {
   name: string;
   phoneNumber: string;
-  image: string | null;
+  image: string | null | undefined;
   bio: string;
   address: string;
 }
@@ -57,18 +57,33 @@ const EditProfile = () => {
     }
   }, [currentUser]);
 
-  const imageSource = getUserImageSrc(currentUser?.image);
-
-  const onImagePick = async () => {};
+  const onImagePick = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.7,
+    });
+    // should fix ts warning
+    if (!result.canceled) {
+      setUser({ ...user, image: result.assets[0] });
+    }
+  };
 
   const onSubmit = async () => {
     const userData = { ...user };
     const { name, bio, address, phoneNumber, image } = userData;
-    if (!name || !bio || !address || !phoneNumber) {
+    if (!name || !bio || !address || !phoneNumber || !image) {
       Alert.alert("Edit profile", "Please fill all the fields");
       return;
     }
     setLoading(true);
+
+    if (typeof image === "object") {
+      const imageRes = await uploadFile("profiles", image?.uri, true);
+      if (imageRes.success) userData.image = imageRes.data;
+      else userData.image = null;
+    }
     // update user
     const res = await updateUser(currentUser?.id as string, userData);
     setLoading(false);
@@ -78,6 +93,11 @@ const EditProfile = () => {
       router.back();
     }
   };
+
+  let imageSource =
+    user.image && typeof user.image === "object"
+      ? user?.image?.uri
+      : getUserImageSrc(user.image);
 
   return (
     <ScreenWrapper>
@@ -89,7 +109,7 @@ const EditProfile = () => {
           <View style={styles.form}>
             <View style={styles.avatarContainer}>
               <Image source={imageSource} style={styles.avatar} />
-              <Pressable style={styles.cameraIcon}>
+              <Pressable style={styles.cameraIcon} onPress={onImagePick}>
                 <Icon name={"camera"} size={25} />
               </Pressable>
             </View>
