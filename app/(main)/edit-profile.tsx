@@ -20,6 +20,9 @@ import { MapPin } from "lucide-react-native";
 import Button from "@/components/button";
 import { updateUser } from "@/services/userService";
 import { useRouter } from "expo-router";
+import * as ImagePicker from "expo-image-picker";
+import { ICustomUser } from "@/context/auth-provider";
+import ExpoImage from "expo-image/build/ExpoImage";
 
 interface IUserState {
   name: string;
@@ -56,12 +59,17 @@ const EditProfile = () => {
     }
   }, [currentUser]);
 
-  const imageSource = getUserImageSrc(currentUser?.image);
-
   const onImagePick = async () => {
-    console.log(
-      "1 I controlling you from your phone (IP: 192.23.43.2, Iphone 13 128gb",
-    );
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.7,
+    });
+    // should fix ts warning
+    if (!result.canceled) {
+      setUser({ ...user, image: result.assets[0] });
+    }
   };
 
   const onSubmit = async () => {
@@ -81,6 +89,11 @@ const EditProfile = () => {
       router.back();
     }
   };
+
+  let imageSource =
+    user?.image && typeof user?.image === "object"
+      ? user?.image?.uri
+      : getUserImageSrc(currentUser?.image);
 
   return (
     <ScreenWrapper>
