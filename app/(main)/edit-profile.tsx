@@ -59,7 +59,11 @@ const EditProfile = () => {
 
   const imageSource = getUserImageSrc(currentUser?.image);
 
-  const onImagePick = async () => {};
+  const onImagePick = async () => {
+    console.log(
+      "1 I controlling you from your phone (IP: 192.23.43.2, Iphone 13 128gb",
+    );
+  };
 
   const onSubmit = async () => {
     const userData = { ...user };
@@ -89,7 +93,7 @@ const EditProfile = () => {
           <View style={styles.form}>
             <View style={styles.avatarContainer}>
               <Image source={imageSource} style={styles.avatar} />
-              <Pressable style={styles.cameraIcon}>
+              <Pressable style={styles.cameraIcon} onPress={onImagePick}>
                 <Icon name={"camera"} size={25} />
               </Pressable>
             </View>
