@@ -1,13 +1,32 @@
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import ScreenWrapper from "@/components/screen-wrapper";
 import Header from "@/components/Header";
 import { hp, wp } from "@/helpers/common";
 import { theme } from "@/constants/theme";
+import Avatar from "@/components/avatar";
+import { useAuth } from "@/hooks/useAuth";
 
 const NewPost = () => {
+  const { user } = useAuth();
   return (
     <ScreenWrapper>
-      <Header title={"Create post"} />
+      <View style={styles.container}>
+        <Header title={"Create post"} />
+        <ScrollView contentContainerStyle={{ gap: 20 }}>
+          {/* avatar*/}
+          <View style={styles.header}>
+            <Avatar
+              uri={user?.image}
+              size={hp(6.5)}
+              rounded={theme.radius.xl}
+            />
+            <View style={{ gap: 2 }}>
+              <Text style={styles.username}> {user && user.name}</Text>
+              <Text style={styles.publicText}> Public</Text>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
     </ScreenWrapper>
   );
 };
@@ -28,6 +47,12 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
     textAlign: "center",
   },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+
   username: {
     fontSize: hp(2.5),
     fontWeight: "bold",
