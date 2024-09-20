@@ -5,6 +5,7 @@ import { hp, wp } from "@/helpers/common";
 import { theme } from "@/constants/theme";
 import Avatar from "@/components/avatar";
 import { useAuth } from "@/hooks/useAuth";
+import RichTextEditor from "@/components/rich-text-editor";
 
 const NewPost = () => {
   const { user } = useAuth();
@@ -21,9 +22,13 @@ const NewPost = () => {
               rounded={theme.radius.xl}
             />
             <View style={{ gap: 2 }}>
-              <Text style={styles.username}> {user && user.name}</Text>
-              <Text style={styles.publicText}> Public</Text>
+              <Text style={styles.username}>{user && user.name}</Text>
+              <Text style={styles.publicText}>Public</Text>
             </View>
+          </View>
+
+          <View style={styles.textEditor}>
+            <RichTextEditor />
           </View>
         </ScrollView>
       </View>
