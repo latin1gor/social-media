@@ -22,6 +22,7 @@ import { updateUser } from "@/services/userService";
 import { useRouter } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import { ImagePickerAsset } from "expo-image-picker";
+import NewPost from "@/app/(main)/new-post";
 
 interface IUserState {
   name: string;
@@ -99,64 +100,65 @@ const EditProfile = () => {
   let imageSource =
     user.image && typeof user.image === "object"
       ? user?.image?.uri
-      : getUserImageSrc(user.image);
+      : getUserImageSrc(user.image as string);
 
   return (
-    <ScreenWrapper>
-      <View style={styles.container}>
-        <ScrollView style={{ flex: 1 }}>
-          <Header title={"Edit profile"} />
-
-          {/*form*/}
-          <View style={styles.form}>
-            <View style={styles.avatarContainer}>
-              <Image source={imageSource} style={styles.avatar} />
-              <Pressable style={styles.cameraIcon} onPress={onImagePick}>
-                <Icon name={"camera"} size={25} />
-              </Pressable>
-            </View>
-            <Text style={{ fontSize: hp(1.5), color: theme.colors.text }}>
-              Please fill your profile details
-            </Text>
-            <Input
-              icon={<Icon name={"user"} />}
-              placeholder={"Enter your name"}
-              value={user.name}
-              onChangeText={(text) =>
-                setUser((prevState) => ({ ...prevState, name: text }))
-              }
-            />
-            <Input
-              icon={<Icon name={"phone"} />}
-              placeholder={"Enter your number"}
-              value={user.phoneNumber}
-              onChangeText={(text) =>
-                setUser((prevState) => ({ ...prevState, phoneNumber: text }))
-              }
-            />
-            <Input
-              icon={<MapPin color={"gray"} />}
-              placeholder={"Enter your address"}
-              value={user.address}
-              onChangeText={(text) =>
-                setUser((prevState) => ({ ...prevState, address: text }))
-              }
-            />
-            <Input
-              placeholder={"Enter your bio"}
-              multiline
-              value={user.bio}
-              containerStyles={styles.bio}
-              onChangeText={(text) =>
-                setUser((prevState) => ({ ...prevState, bio: text }))
-              }
-            />
-
-            <Button title={"Update"} loading={loading} onPress={onSubmit} />
-          </View>
-        </ScrollView>
-      </View>
-    </ScreenWrapper>
+    // <ScreenWrapper>
+    //   <View style={styles.container}>
+    //     <ScrollView style={{ flex: 1 }}>
+    //       <Header title={"Edit profile"} />
+    //
+    //       {/*form*/}
+    //       <View style={styles.form}>
+    //         <View style={styles.avatarContainer}>
+    //           <Image source={imageSource} style={styles.avatar} />
+    //           <Pressable style={styles.cameraIcon} onPress={onImagePick}>
+    //             <Icon name={"camera"} size={25} />
+    //           </Pressable>
+    //         </View>
+    //         <Text style={{ fontSize: hp(1.5), color: theme.colors.text }}>
+    //           Please fill your profile details
+    //         </Text>
+    //         <Input
+    //           icon={<Icon name={"user"} />}
+    //           placeholder={"Enter your name"}
+    //           value={user.name}
+    //           onChangeText={(text) =>
+    //             setUser((prevState) => ({ ...prevState, name: text }))
+    //           }
+    //         />
+    //         <Input
+    //           icon={<Icon name={"phone"} />}
+    //           placeholder={"Enter your number"}
+    //           value={user.phoneNumber}
+    //           onChangeText={(text) =>
+    //             setUser((prevState) => ({ ...prevState, phoneNumber: text }))
+    //           }
+    //         />
+    //         <Input
+    //           icon={<MapPin color={"gray"} />}
+    //           placeholder={"Enter your address"}
+    //           value={user.address}
+    //           onChangeText={(text) =>
+    //             setUser((prevState) => ({ ...prevState, address: text }))
+    //           }
+    //         />
+    //         <Input
+    //           placeholder={"Enter your bio"}
+    //           multiline
+    //           value={user.bio}
+    //           containerStyles={styles.bio}
+    //           onChangeText={(text) =>
+    //             setUser((prevState) => ({ ...prevState, bio: text }))
+    //           }
+    //         />
+    //
+    //         <Button title={"Update"} loading={loading} onPress={onSubmit} />
+    //       </View>
+    //     </ScrollView>
+    //   </View>
+    // </ScreenWrapper> <New
+    <NewPost />
   );
 };
 

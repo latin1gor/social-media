@@ -12,7 +12,7 @@ export interface ICustomUser extends User {
 
 interface IAuthContext {
   user: ICustomUser | null;
-  setAuth: (user: ICustomUser) => void;
+  setAuth: (user: ICustomUser | null) => void;
   setUserData: (user: ICustomUser) => void;
 }
 
