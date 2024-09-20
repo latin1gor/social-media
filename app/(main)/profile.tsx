@@ -73,7 +73,7 @@ const UserHeader = ({ user, router, handleLogout }: IUserHeaderProps) => {
         <View style={{ gap: 15 }}>
           <View style={styles.avatarContainer}>
             <Avatar
-              uri={user?.image}
+              uri={user?.image as string}
               size={hp(12)}
               rounded={theme.radius.xl * 3.4}
             />
