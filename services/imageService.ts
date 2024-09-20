@@ -5,7 +5,7 @@ import { supabaseUrl } from "@/constants";
 
 export const getUserImageSrc = (imagePath: string) => {
   if (imagePath) {
-    getSupabaseFileUrl(imagePath);
+    return getSupabaseFileUrl(imagePath);
   } else {
     return require("../assets/images/user.jpg");
   }
