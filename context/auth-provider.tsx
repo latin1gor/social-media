@@ -12,8 +12,8 @@ export interface ICustomUser extends User {
 
 interface IAuthContext {
   user: ICustomUser | null;
-  setAuth: (user: ICustomUser | null) => void;
-  setUserData: (user: ICustomUser | null) => void;
+  setAuth: (user: ICustomUser) => void;
+  setUserData: (user: ICustomUser) => void;
 }
 
 const defaultValue: IAuthContext = {

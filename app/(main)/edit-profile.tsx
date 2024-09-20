@@ -90,6 +90,7 @@ const EditProfile = () => {
     setLoading(false);
 
     if (res.success) {
+      // @ts-ignore
       setUserData({ ...currentUser, ...userData });
       router.back();
     }
