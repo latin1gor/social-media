@@ -1,8 +1,9 @@
 import { createContext, PropsWithChildren, useState } from "react";
 import { User } from "@supabase/auth-js";
+import { ImagePickerAsset } from "expo-image-picker";
 
 export interface ICustomUser extends User {
-  image?: string;
+  image?: string | ImagePickerAsset;
   address?: string;
   name?: string;
   phoneNumber?: string;
