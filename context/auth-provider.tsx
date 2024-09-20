@@ -3,7 +3,7 @@ import { User } from "@supabase/auth-js";
 import { ImagePickerAsset } from "expo-image-picker";
 
 export interface ICustomUser extends User {
-  image?: string | ImagePickerAsset;
+  image?: string | ImagePickerAsset | null | undefined;
   address?: string;
   name?: string;
   phoneNumber?: string;
@@ -13,13 +13,7 @@ export interface ICustomUser extends User {
 interface IAuthContext {
   user: ICustomUser | null;
   setAuth: (user: ICustomUser | null) => void;
-  setUserData: (user: {
-    image: string | null;
-    phoneNumber: string;
-    address: string;
-    name: string;
-    bio: string;
-  }) => void;
+  setUserData: (user: ICustomUser | null) => void;
 }
 
 const defaultValue: IAuthContext = {

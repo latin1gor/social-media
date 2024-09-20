@@ -26,7 +26,7 @@ import { ImagePickerAsset } from "expo-image-picker";
 interface IUserState {
   name: string;
   phoneNumber: string;
-  image: ImagePickerAsset | null | undefined;
+  image: string | ImagePickerAsset | null | undefined;
   bio: string;
   address: string;
 }

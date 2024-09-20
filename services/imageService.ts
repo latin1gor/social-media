@@ -1,8 +1,11 @@
 import * as FileSystem from "expo-file-system";
 import { decode } from "base64-arraybuffer";
 import { supabase } from "@/lib/supabase";
+import { ImagePickerAsset } from "expo-image-picker";
 
-export const getUserImageSrc = (imagePath: string | undefined) => {
+export const getUserImageSrc = (
+  imagePath: string | ImagePickerAsset | null | undefined,
+) => {
   if (imagePath) {
     return { uri: imagePath };
   } else {
