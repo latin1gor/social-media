@@ -21,11 +21,12 @@ import Button from "@/components/button";
 import { updateUser } from "@/services/userService";
 import { useRouter } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
+import { ImagePickerAsset } from "expo-image-picker";
 
 interface IUserState {
   name: string;
   phoneNumber: string;
-  image: string | null | undefined;
+  image: string | ImagePickerAsset | null | undefined;
   bio: string;
   address: string;
 }
@@ -89,6 +90,7 @@ const EditProfile = () => {
     setLoading(false);
 
     if (res.success) {
+      // @ts-ignore
       setUserData({ ...currentUser, ...userData });
       router.back();
     }
