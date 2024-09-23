@@ -1,7 +1,11 @@
-import React from "react";
+import React, { Ref } from "react";
 import { Text, View } from "react-native";
 
-const RichTextEditor = () => {
+interface IRichTextEditorProps {
+  editorRef?: Ref<any>;
+  onChange?: () => void;
+}
+const RichTextEditor = ({ editorRef, onChange }: IRichTextEditorProps) => {
   return <Text>RichTextEditor</Text>;
 };
 

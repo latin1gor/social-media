@@ -12,10 +12,18 @@ import { theme } from "@/constants/theme";
 import Avatar from "@/components/avatar";
 import { useAuth } from "@/hooks/useAuth";
 import RichTextEditor from "@/components/rich-text-editor";
-import { router } from "expo-router";
+import { router, useRouter } from "expo-router";
+import { useRef, useState } from "react";
 
 const NewPost = () => {
   const { user } = useAuth();
+
+  const bodyRef = useRef(null);
+  const editorRef = useRef(null);
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState<File>();
+
   return (
     <ScreenWrapper>
       <View style={styles.container}>
@@ -37,7 +45,10 @@ const NewPost = () => {
           </View>
 
           <View style={styles.textEditor}>
-            <RichTextEditor />
+            <RichTextEditor
+              editorRef={editorRef}
+              onChange={(body) => (bodyRef.current = body)}
+            />
           </View>
         </ScrollView>
       </View>
