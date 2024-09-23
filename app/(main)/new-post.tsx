@@ -1,4 +1,10 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import ScreenWrapper from "@/components/screen-wrapper";
 import Header from "@/components/Header";
 import { hp, wp } from "@/helpers/common";
@@ -6,6 +12,7 @@ import { theme } from "@/constants/theme";
 import Avatar from "@/components/avatar";
 import { useAuth } from "@/hooks/useAuth";
 import RichTextEditor from "@/components/rich-text-editor";
+import { router } from "expo-router";
 
 const NewPost = () => {
   const { user } = useAuth();
@@ -16,11 +23,13 @@ const NewPost = () => {
         <ScrollView contentContainerStyle={{ gap: 20 }}>
           {/* avatar*/}
           <View style={styles.header}>
-            <Avatar
-              uri={user?.image}
-              size={hp(6.5)}
-              rounded={theme.radius.xl}
-            />
+            <TouchableOpacity onPress={() => router.push("/profile")}>
+              <Avatar
+                uri={user?.image}
+                size={hp(6.5)}
+                rounded={theme.radius.xl}
+              />
+            </TouchableOpacity>
             <View style={{ gap: 2 }}>
               <Text style={styles.username}>{user && user.name}</Text>
               <Text style={styles.publicText}>Public</Text>
