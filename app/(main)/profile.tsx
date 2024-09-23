@@ -77,12 +77,12 @@ const UserHeader = ({ user, router, handleLogout }: IUserHeaderProps) => {
               size={hp(12)}
               rounded={theme.radius.xl * 3.4}
             />
-            <Pressable
+            <TouchableOpacity
               style={styles.editIcon}
               onPress={() => router.push("/edit-profile")}
             >
               <Icon name={"edit"} size={25} strokeWidth={2.5} />
-            </Pressable>
+            </TouchableOpacity>
           </View>
 
           {/* username and address */}
