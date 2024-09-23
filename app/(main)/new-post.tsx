@@ -47,7 +47,7 @@ const NewPost = () => {
           <View style={styles.textEditor}>
             <RichTextEditor
               editorRef={editorRef}
-              onChange={(body) => (bodyRef.current = body)}
+              onChange={(body: any) => (bodyRef.current = body)}
             />
           </View>
         </ScrollView>
