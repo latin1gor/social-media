@@ -14,6 +14,8 @@ import { useAuth } from "@/hooks/useAuth";
 import RichTextEditor from "@/components/rich-text-editor";
 import { router, useRouter } from "expo-router";
 import { useRef, useState } from "react";
+import Icon from "@/assets/icons";
+import { ImageIcon } from "lucide-react-native";
 
 const NewPost = () => {
   const { user } = useAuth();
@@ -49,6 +51,14 @@ const NewPost = () => {
               editorRef={editorRef}
               onChange={(body: any) => (bodyRef.current = body)}
             />
+          </View>
+          <View style={styles.media}>
+            <Text style={styles.addImageText}>Add to your post!</Text>
+            <View style={styles.mediaIcons}>
+              <TouchableOpacity onPress={onPick}>
+                <ImageIcon size={30} color={theme.colors.dark} />
+              </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
       </View>
