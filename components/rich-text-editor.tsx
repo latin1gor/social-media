@@ -1,6 +1,10 @@
 import React, { Ref } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { actions, RichToolbar } from "react-native-pell-rich-editor";
+import {
+  actions,
+  RichEditor,
+  RichToolbar,
+} from "react-native-pell-rich-editor";
 import { theme } from "@/constants/theme";
 
 interface IRichTextEditorProps {
@@ -38,7 +42,15 @@ const RichTextEditor = ({ editorRef, onChange }: IRichTextEditorProps) => {
         selectedIconTint={theme.colors.primaryDark}
         disabled={false}
         style={styles.richBar}
-        flatContainerStyle={styles.listStyle}
+        flatContainerStyle={styles.flatStyle}
+      />
+
+      <RichEditor
+        ref={editorRef}
+        containerStyle={styles.rich}
+        editorStyle={styles.editorStyle}
+        placeholder={"What's on your mind?"}
+        onChange={onChange}
       />
     </View>
   );
@@ -52,7 +64,21 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: theme.radius.xl,
     backgroundColor: theme.colors.gray,
   },
-  listStyle: {
-    // Add any styles for the toolbar container
+  rich: {
+    minHeight: 240,
+    flex: 1,
+    borderWidth: 1.5,
+    borderTopWidth: 0,
+    borderBottomRightRadius: theme.radius.xl,
+    borderBottomLeftRadius: theme.radius.xl,
+    borderColor: theme.colors.gray,
+    padding: 5,
+  },
+  contentStyle: {
+    color: theme.colors.text,
+  },
+  flatStyle: {
+    paddingHorizontal: 8,
+    gap: 3,
   },
 });
