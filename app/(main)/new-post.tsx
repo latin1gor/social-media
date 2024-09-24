@@ -15,7 +15,9 @@ import RichTextEditor from "@/components/rich-text-editor";
 import { router, useRouter } from "expo-router";
 import { useRef, useState } from "react";
 import Icon from "@/assets/icons";
-import { ImageIcon } from "lucide-react-native";
+import { ImageIcon, VideoIcon } from "lucide-react-native";
+import Button from "@/components/button";
+import * as ImagePicker from "expo-image-picker";
 
 const NewPost = () => {
   const { user } = useAuth();
@@ -26,14 +28,26 @@ const NewPost = () => {
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<File>();
 
-  const onPick = async (file: File) => {
-    console.log(file);
+  const onPick = async (isImage: boolean) => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: isImage
+        ? ImagePicker.MediaTypeOptions.Images
+        : ImagePicker.MediaTypeOptions.Videos,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.7,
+    });
   };
+
+  const onSubmit = async () => {};
   return (
     <ScreenWrapper>
       <View style={styles.container}>
         <Header title={"Create post"} />
-        <ScrollView contentContainerStyle={{ gap: 20 }}>
+        <ScrollView
+          contentContainerStyle={{ gap: 20 }}
+          keyboardDismissMode={"on-drag"}
+        >
           {/* avatar*/}
           <View style={styles.header}>
             <TouchableOpacity onPress={() => router.push("/profile")}>
@@ -58,12 +72,22 @@ const NewPost = () => {
           <View style={styles.media}>
             <Text style={styles.addImageText}>Add to your post!</Text>
             <View style={styles.mediaIcons}>
-              <TouchableOpacity onPress={onPick}>
+              <TouchableOpacity onPress={() => onPick(true)}>
                 <ImageIcon size={30} color={theme.colors.dark} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => onPick(false)}>
+                <VideoIcon size={30} color={theme.colors.dark} />
               </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
+        <Button
+          buttonStyle={{ height: hp(6.2) }}
+          hasShadow={false}
+          loading={false}
+          title={"Post"}
+          onPress={onSubmit}
+        />
       </View>
     </ScreenWrapper>
   );
