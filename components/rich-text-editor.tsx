@@ -1,6 +1,7 @@
 import React, { Ref } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { actions, RichToolbar } from "react-native-pell-rich-editor";
+import { theme } from "@/constants/theme";
 
 interface IRichTextEditorProps {
   editorRef?: Ref<any>;
@@ -10,7 +11,7 @@ const RichTextEditor = ({ editorRef, onChange }: IRichTextEditorProps) => {
   return (
     <View style={{ minHeight: 285 }}>
       <RichToolbar
-        editor={editorRef || null}
+        editor={editorRef}
         actions={[
           actions.setStrikethrough,
           actions.removeFormat,
@@ -23,7 +24,18 @@ const RichTextEditor = ({ editorRef, onChange }: IRichTextEditorProps) => {
           actions.alignCenter,
           actions.code,
           actions.line,
+          actions.heading1,
+          actions.heading4,
         ]}
+        iconMap={{
+          [actions.heading1]: ({ tintColor }: { tintColor: any }) => (
+            <Text style={{ color: tintColor, fontWeight: "bold" }}>H1</Text>
+          ),
+          [actions.heading4]: ({ tintColor }: { tintColor: any }) => (
+            <Text style={{ color: tintColor }}>H4</Text>
+          ),
+        }}
+        selectedIconTint={theme.colors.primaryDark}
         disabled={false}
         style={styles.richBar}
         flatContainerStyle={styles.listStyle}
@@ -36,7 +48,9 @@ export default RichTextEditor;
 
 const styles = StyleSheet.create({
   richBar: {
-    // Add any styles for the toolbar
+    borderTopRightRadius: theme.radius.xl,
+    borderTopLeftRadius: theme.radius.xl,
+    backgroundColor: theme.colors.gray,
   },
   listStyle: {
     // Add any styles for the toolbar container
