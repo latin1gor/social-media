@@ -26,6 +26,9 @@ const NewPost = () => {
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<File>();
 
+  const onPick = async (file: File) => {
+    console.log(file);
+  };
   return (
     <ScreenWrapper>
       <View style={styles.container}>
