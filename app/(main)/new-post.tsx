@@ -18,6 +18,7 @@ import Icon from "@/assets/icons";
 import { ImageIcon, VideoIcon } from "lucide-react-native";
 import Button from "@/components/button";
 import * as ImagePicker from "expo-image-picker";
+import { ImagePickerAsset, ImagePickerOptions } from "expo-image-picker";
 
 const NewPost = () => {
   const { user } = useAuth();
@@ -26,17 +27,28 @@ const NewPost = () => {
   const editorRef = useRef(null);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<ImagePickerAsset | null>();
 
   const onPick = async (isImage: boolean) => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: isImage
-        ? ImagePicker.MediaTypeOptions.Images
-        : ImagePicker.MediaTypeOptions.Videos,
+    let mediaConfig: ImagePickerOptions = {
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 0.7,
-    });
+    };
+
+    if (!isImage) {
+      mediaConfig = {
+        mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+        allowsEditing: true,
+      };
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync(mediaConfig);
+
+    if (!result.canceled) {
+      setFile(result.assets[0]);
+    }
   };
 
   const onSubmit = async () => {};
@@ -69,6 +81,8 @@ const NewPost = () => {
               onChange={(body: any) => (bodyRef.current = body)}
             />
           </View>
+
+          {file && <View style={styles.fil}></View>}
           <View style={styles.media}>
             <Text style={styles.addImageText}>Add to your post!</Text>
             <View style={styles.mediaIcons}>
