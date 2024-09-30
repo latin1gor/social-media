@@ -69,6 +69,7 @@ const NewPost = () => {
     if (file.includes("postImage")) {
       return "image";
     }
+
     return "video";
   };
 
