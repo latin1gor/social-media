@@ -20,6 +20,8 @@ import Button from "@/components/button";
 import * as ImagePicker from "expo-image-picker";
 import { ImagePickerAsset, ImagePickerOptions } from "expo-image-picker";
 
+type FileType = ImagePickerAsset | null;
+
 const NewPost = () => {
   const { user } = useAuth();
 
@@ -27,7 +29,7 @@ const NewPost = () => {
   const editorRef = useRef(null);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [file, setFile] = useState<ImagePickerAsset | null>();
+  const [file, setFile] = useState<FileType>();
 
   const onPick = async (isImage: boolean) => {
     let mediaConfig: ImagePickerOptions = {
@@ -50,6 +52,12 @@ const NewPost = () => {
       setFile(result.assets[0]);
     }
   };
+
+  const isLocalFile = (file: FileType) => {};
+
+  // const getFileType = (file: ImagePickerAsset | null) => {
+  //   if (!file) return null;
+  // };
 
   const onSubmit = async () => {};
   return (
@@ -82,7 +90,11 @@ const NewPost = () => {
             />
           </View>
 
-          {file && <View style={styles.file}></View>}
+          {file && (
+            <View style={styles.file}>
+              {getFileType(file) === "video" ? <></> : <></>}
+            </View>
+          )}
           <View style={styles.media}>
             <Text style={styles.addImageText}>Add to your post!</Text>
             <View style={styles.mediaIcons}>
