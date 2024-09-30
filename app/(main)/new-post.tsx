@@ -20,8 +20,9 @@ import Button from "@/components/button";
 import * as ImagePicker from "expo-image-picker";
 import { ImagePickerAsset, ImagePickerOptions } from "expo-image-picker";
 import { Image } from "react-native";
+import { getSupabaseFileUrl } from "@/services/imageService";
 
-type FileType = ImagePickerAsset | null;
+type FileType = ImagePickerAsset | null | string;
 
 const NewPost = () => {
   const { user } = useAuth();
@@ -69,8 +70,14 @@ const NewPost = () => {
     if (file.includes("postImage")) {
       return "image";
     }
-
     return "video";
+  };
+
+  const getFileUri = (file: FileType) => {
+    if (!file) return null;
+    if (isLocalFile(file)) return file.uri;
+
+    return getSupabaseFileUrl(file as string)?.uri;
   };
 
   const onSubmit = async () => {};
