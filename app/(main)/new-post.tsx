@@ -19,6 +19,7 @@ import { ImageIcon, VideoIcon } from "lucide-react-native";
 import Button from "@/components/button";
 import * as ImagePicker from "expo-image-picker";
 import { ImagePickerAsset, ImagePickerOptions } from "expo-image-picker";
+import { Image } from "react-native";
 
 type FileType = ImagePickerAsset | null;
 
@@ -53,11 +54,23 @@ const NewPost = () => {
     }
   };
 
-  const isLocalFile = (file: FileType) => {};
+  const isLocalFile = (file: FileType) => {
+    if (!file) return null;
+    return typeof file === "object";
+  };
+  console.log(file);
 
-  // const getFileType = (file: ImagePickerAsset | null) => {
-  //   if (!file) return null;
-  // };
+  const getFileType = (file: FileType) => {
+    if (!file) return null;
+    if (isLocalFile(file)) return file.type;
+
+    console.log(file);
+    // check image or video for the remote file
+    if (file.includes("postImage")) {
+      return "image";
+    }
+    return "video";
+  };
 
   const onSubmit = async () => {};
   return (
@@ -92,7 +105,15 @@ const NewPost = () => {
 
           {file && (
             <View style={styles.file}>
-              {getFileType(file) === "video" ? <></> : <></>}
+              {getFileType(file) === "video" ? (
+                <></>
+              ) : (
+                <Image
+                  source={{ uri: getFileUri(file) }}
+                  resizeMode={"cover"}
+                  style={{ flex: 1 }}
+                ></Image>
+              )}
             </View>
           )}
           <View style={styles.media}>
