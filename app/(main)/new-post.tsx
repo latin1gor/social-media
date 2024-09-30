@@ -82,7 +82,7 @@ const NewPost = () => {
             />
           </View>
 
-          {file && <View style={styles.fil}></View>}
+          {file && <View style={styles.file}></View>}
           <View style={styles.media}>
             <Text style={styles.addImageText}>Add to your post!</Text>
             <View style={styles.mediaIcons}>
@@ -173,5 +173,12 @@ const styles = StyleSheet.create({
     // backgroundColor: theme.colors.gray,
     borderRadius: theme.radius.md,
     // padding: 6,
+  },
+  file: {
+    height: hp(30),
+    width: "100%",
+    borderRadius: theme.radius.xl,
+    overflow: "hidden",
+    borderCurve: "continuous",
   },
 });
