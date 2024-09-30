@@ -1,4 +1,5 @@
 import {
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,10 +13,9 @@ import { theme } from "@/constants/theme";
 import Avatar from "@/components/avatar";
 import { useAuth } from "@/hooks/useAuth";
 import RichTextEditor from "@/components/rich-text-editor";
-import { router, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useRef, useState } from "react";
-import Icon from "@/assets/icons";
-import { ImageIcon, VideoIcon } from "lucide-react-native";
+import { ImageIcon, Trash2, VideoIcon } from "lucide-react-native";
 import Button from "@/components/button";
 import * as ImagePicker from "expo-image-picker";
 import { ImagePickerAsset, ImagePickerOptions } from "expo-image-picker";
@@ -122,6 +122,12 @@ const NewPost = () => {
                   style={{ flex: 1 }}
                 ></Image>
               )}
+              <TouchableOpacity
+                style={styles.closeIcon}
+                onPress={() => setFile(null)}
+              >
+                <Trash2 size={20} color={"white"} />
+              </TouchableOpacity>
             </View>
           )}
           <View style={styles.media}>
@@ -221,5 +227,13 @@ const styles = StyleSheet.create({
     borderRadius: theme.radius.xl,
     overflow: "hidden",
     borderCurve: "continuous",
+  },
+  closeIcon: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    backgroundColor: "rgba(255, 0, 0, 0.8)",
+    padding: 7,
+    borderRadius: theme.radius.sm,
   },
 });
