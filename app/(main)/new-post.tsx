@@ -21,8 +21,9 @@ import * as ImagePicker from "expo-image-picker";
 import { ImagePickerAsset, ImagePickerOptions } from "expo-image-picker";
 import { Image } from "react-native";
 import { getSupabaseFileUrl } from "@/services/imageService";
+import { Video } from "expo-av";
 
-type FileType = ImagePickerAsset | null | string;
+type FileType = ImagePickerAsset | null | string | any;
 
 const NewPost = () => {
   const { user } = useAuth();
@@ -114,7 +115,12 @@ const NewPost = () => {
           {file && (
             <View style={styles.file}>
               {getFileType(file) === "video" ? (
-                <></>
+                <Video
+                  style={{ flex: 1 }}
+                  useNativeControls
+                  isLooping
+                  source={{ uri: getFileUri(file) }}
+                />
               ) : (
                 <Image
                   source={{ uri: getFileUri(file) }}
