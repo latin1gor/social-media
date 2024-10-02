@@ -1,4 +1,5 @@
 import {
+  Alert,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -60,13 +61,11 @@ const NewPost = () => {
     if (!file) return null;
     return typeof file === "object";
   };
-  console.log(file);
 
   const getFileType = (file: FileType) => {
     if (!file) return null;
     if (isLocalFile(file)) return file.type;
 
-    console.log(file);
     // check image or video for the remote file
     if (file.includes("postImage")) {
       return "image";
@@ -81,7 +80,20 @@ const NewPost = () => {
     return getSupabaseFileUrl(file as string)?.uri;
   };
 
-  const onSubmit = async () => {};
+  const onSubmit = async () => {
+    if (!bodyRef.current || !file) {
+      Alert.alert("Post", "Please enter the all fields (text and media)");
+      return;
+    }
+
+    const data = {
+      file,
+      body: bodyRef.current,
+      userId: user?.id,
+    };
+
+    // create post
+  };
   return (
     <ScreenWrapper>
       <View style={styles.container}>
