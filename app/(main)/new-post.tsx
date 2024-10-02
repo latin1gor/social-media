@@ -23,6 +23,7 @@ import { ImagePickerAsset, ImagePickerOptions } from "expo-image-picker";
 import { Image } from "react-native";
 import { getSupabaseFileUrl } from "@/services/imageService";
 import { Video } from "expo-av";
+import { createOrUpdatePost } from "@/services/postService";
 
 type FileType = ImagePickerAsset | null | string | any;
 
@@ -93,6 +94,11 @@ const NewPost = () => {
     };
 
     // create post
+    setLoading(true);
+
+    const res = await createOrUpdatePost(data);
+    setLoading(false);
+    console.log(res);
   };
   return (
     <ScreenWrapper>
@@ -163,7 +169,7 @@ const NewPost = () => {
         <Button
           buttonStyle={{ height: hp(6.2) }}
           hasShadow={false}
-          loading={false}
+          loading={loading}
           title={"Post"}
           onPress={onSubmit}
         />
