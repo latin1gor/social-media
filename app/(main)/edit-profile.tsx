@@ -66,7 +66,6 @@ const EditProfile = () => {
       aspect: [4, 3],
       quality: 0.7,
     });
-    // should fix ts warning
     if (!result.canceled) {
       setUser({ ...user, image: result.assets[0] });
     }

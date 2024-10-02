@@ -1,4 +1,5 @@
 import {
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,12 +13,17 @@ import { theme } from "@/constants/theme";
 import Avatar from "@/components/avatar";
 import { useAuth } from "@/hooks/useAuth";
 import RichTextEditor from "@/components/rich-text-editor";
-import { router, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useRef, useState } from "react";
-import Icon from "@/assets/icons";
-import { ImageIcon, VideoIcon } from "lucide-react-native";
+import { ImageIcon, Trash2, VideoIcon } from "lucide-react-native";
 import Button from "@/components/button";
 import * as ImagePicker from "expo-image-picker";
+import { ImagePickerAsset, ImagePickerOptions } from "expo-image-picker";
+import { Image } from "react-native";
+import { getSupabaseFileUrl } from "@/services/imageService";
+import { Video } from "expo-av";
+
+type FileType = ImagePickerAsset | null | string | any;
 
 const NewPost = () => {
   const { user } = useAuth();
@@ -26,17 +32,53 @@ const NewPost = () => {
   const editorRef = useRef(null);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<FileType>();
 
   const onPick = async (isImage: boolean) => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: isImage
-        ? ImagePicker.MediaTypeOptions.Images
-        : ImagePicker.MediaTypeOptions.Videos,
+    let mediaConfig: ImagePickerOptions = {
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 0.7,
-    });
+    };
+
+    if (!isImage) {
+      mediaConfig = {
+        mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+        allowsEditing: true,
+      };
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync(mediaConfig);
+
+    if (!result.canceled) {
+      setFile(result.assets[0]);
+    }
+  };
+
+  const isLocalFile = (file: FileType) => {
+    if (!file) return null;
+    return typeof file === "object";
+  };
+  console.log(file);
+
+  const getFileType = (file: FileType) => {
+    if (!file) return null;
+    if (isLocalFile(file)) return file.type;
+
+    console.log(file);
+    // check image or video for the remote file
+    if (file.includes("postImage")) {
+      return "image";
+    }
+    return "video";
+  };
+
+  const getFileUri = (file: FileType) => {
+    if (!file) return null;
+    if (isLocalFile(file)) return file.uri;
+
+    return getSupabaseFileUrl(file as string)?.uri;
   };
 
   const onSubmit = async () => {};
@@ -69,6 +111,31 @@ const NewPost = () => {
               onChange={(body: any) => (bodyRef.current = body)}
             />
           </View>
+
+          {file && (
+            <View style={styles.file}>
+              {getFileType(file) === "video" ? (
+                <Video
+                  style={{ flex: 1 }}
+                  useNativeControls
+                  isLooping
+                  source={{ uri: getFileUri(file) }}
+                />
+              ) : (
+                <Image
+                  source={{ uri: getFileUri(file) }}
+                  resizeMode={"cover"}
+                  style={{ flex: 1 }}
+                ></Image>
+              )}
+              <TouchableOpacity
+                style={styles.closeIcon}
+                onPress={() => setFile(null)}
+              >
+                <Trash2 size={20} color={"white"} />
+              </TouchableOpacity>
+            </View>
+          )}
           <View style={styles.media}>
             <Text style={styles.addImageText}>Add to your post!</Text>
             <View style={styles.mediaIcons}>
@@ -159,5 +226,20 @@ const styles = StyleSheet.create({
     // backgroundColor: theme.colors.gray,
     borderRadius: theme.radius.md,
     // padding: 6,
+  },
+  file: {
+    height: hp(30),
+    width: "100%",
+    borderRadius: theme.radius.xl,
+    overflow: "hidden",
+    borderCurve: "continuous",
+  },
+  closeIcon: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    backgroundColor: "rgba(255, 0, 0, 0.8)",
+    padding: 7,
+    borderRadius: theme.radius.sm,
   },
 });
