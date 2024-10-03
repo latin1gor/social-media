@@ -21,10 +21,30 @@ export const createOrUpdatePost = async (post: any) => {
         console.error("Create post error:", error);
         return { success: false, msg: "Could not create post" };
       }
-      return { success: true, data: data, msg: "Everything is good" };
+      return { success: true, data, msg: "Everything is good" };
     }
   } catch (e) {
     console.error("Create post error:", e);
     return { success: false, msg: "Could not create post" };
+  }
+};
+
+export const fetchPosts = async (limit: number = 10) => {
+  try {
+    const { data, error } = await supabase
+      .from("posts")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(limit);
+
+    if (error) {
+      console.error("Fetch post error:", error);
+      return { success: false, msg: "Could not Fetch post" };
+    }
+
+    return { success: true, data, msg: "Everything is good" };
+  } catch (e) {
+    console.error("Fetch posts error:", e);
+    return { success: false, msg: "Could not fetch the post" };
   }
 };

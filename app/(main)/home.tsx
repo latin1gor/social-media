@@ -6,8 +6,20 @@ import Icon from "@/assets/icons";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "expo-router";
 import Avatar from "@/components/avatar";
+import { useEffect, useState } from "react";
+import { fetchPosts } from "@/services/postService";
 
 const Home = () => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  const getPosts = async () => {
+    const res = await fetchPosts();
+    console.log(res);
+  };
   const { user } = useAuth();
   const router = useRouter();
 
