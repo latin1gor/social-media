@@ -21,7 +21,7 @@ export const createOrUpdatePost = async (post: any) => {
         console.error("Create post error:", error);
         return { success: false, msg: "Could not create post" };
       }
-      return { success: true, data: data };
+      return { success: true, data: data, msg: "Everything is good" };
     }
   } catch (e) {
     console.error("Create post error:", e);
