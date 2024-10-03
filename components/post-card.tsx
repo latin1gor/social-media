@@ -1,10 +1,13 @@
 import { ICustomUser } from "@/context/auth-provider";
 import { Router } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { theme } from "@/constants/theme";
-import { hp } from "@/helpers/common";
+import { hp, wp } from "@/helpers/common";
 import { has } from "react-native-reanimated/lib/typescript/createAnimatedComponent/utils";
 import Avatar from "@/components/avatar";
+import moment from "moment";
+import { Ellipsis } from "lucide-react-native";
+import RenderHTML from "react-native-render-html";
 
 interface IPostCardProps {
   item: any;
@@ -26,7 +29,9 @@ const PostCard = ({
     elevation: 1,
   };
 
-  console.log(item);
+  const created_at = moment(item?.created_at).format("MMM D");
+
+  const openPostDetails = () => {};
   return (
     <View style={[styles.container, hasShadow && shadowStyles]}>
       <View style={styles.header}>
@@ -37,10 +42,23 @@ const PostCard = ({
             size={hp(4.5)}
             rounded={theme.radius.md}
           />
+
           <View style={{ gap: 2 }}>
             <Text style={styles.username}>{item?.user?.name}</Text>
-            <Text style={styles.postTime}>{item?.created_at}</Text>
+            <Text style={styles.postTime}>{created_at}</Text>
           </View>
+        </View>
+        <TouchableOpacity onPress={openPostDetails}>
+          <Ellipsis size={hp(3.4)} strokeWidth={3} color={"black"} />
+        </TouchableOpacity>
+      </View>
+
+      {/*Post body & media */}
+      <View style={styles.content}>
+        <View style={styles.postBody}>
+          {item?.body && (
+            <RenderHTML contentWidth={wp(100)} source={{ html: item.body }} />
+          )}
         </View>
       </View>
     </View>
