@@ -5,7 +5,9 @@ import { supabase } from "@/lib/supabase";
 import AuthProvider from "@/context/auth-provider";
 import { User } from "@supabase/auth-js";
 import { getUserData } from "@/services/userService";
+import { LogBox } from "react-native";
 
+LogBox.ignoreLogs(["Warning: TNodeChildrenRenderer", ""]);
 const _layout = () => {
   return (
     <AuthProvider>

@@ -8,6 +8,9 @@ import Avatar from "@/components/avatar";
 import moment from "moment";
 import { Ellipsis } from "lucide-react-native";
 import RenderHTML from "react-native-render-html";
+import { getSupabaseFileUrl } from "@/services/imageService";
+import { Image } from "expo-image";
+import { Video } from "expo-av";
 
 interface IPostCardProps {
   item: any;
@@ -30,7 +33,7 @@ const PostCard = ({
   };
 
   const created_at = moment(item?.created_at).format("MMM D");
-
+  console.log(item);
   const openPostDetails = () => {};
   return (
     <View style={[styles.container, hasShadow && shadowStyles]}>
@@ -61,6 +64,27 @@ const PostCard = ({
           )}
         </View>
       </View>
+
+      {item?.file && item?.file?.includes("postImages") && (
+        <Image
+          source={getSupabaseFileUrl(item.file)}
+          transition={100}
+          style={styles.postMedia}
+          contentFit={"cover"}
+        />
+      )}
+
+      {item?.file && item?.file?.includes("postVideos") && (
+        <Video
+          useNativeControls
+          style={[styles.postMedia, { height: hp(30) }]}
+          // @ts-ignore
+          resizeMode={"cover"}
+          // @ts-ignore
+          source={getSupabaseFileUrl(item?.file)}
+          isLooping
+        />
+      )}
     </View>
   );
 };
