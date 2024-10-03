@@ -1,4 +1,11 @@
-import { Button, Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Button,
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 import ScreenWrapper from "@/components/screen-wrapper";
 import { theme } from "@/constants/theme";
 import { hp, wp } from "@/helpers/common";
@@ -8,7 +15,9 @@ import { useRouter } from "expo-router";
 import Avatar from "@/components/avatar";
 import { useEffect, useState } from "react";
 import { fetchPosts } from "@/services/postService";
+import PostCard from "@/components/post-card";
 
+let limit = 1;
 const Home = () => {
   const [posts, setPosts] = useState([]);
 
@@ -17,8 +26,12 @@ const Home = () => {
   }, []);
 
   const getPosts = async () => {
-    const res = await fetchPosts();
-    console.log(res);
+    limit = limit + 10;
+    const res = await fetchPosts(limit);
+    if (res.success) {
+      // @ts-ignore
+      setPosts(res?.data);
+    }
   };
   const { user } = useAuth();
   const router = useRouter();
@@ -50,6 +63,16 @@ const Home = () => {
             </TouchableOpacity>
           </View>
         </View>
+        <FlatList
+          data={posts}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.listStyle}
+          // @ts-ignore
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <PostCard item={item} currentUser={user} router={router} />
+          )}
+        />
       </View>
     </ScreenWrapper>
   );
