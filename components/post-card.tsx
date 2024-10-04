@@ -1,16 +1,23 @@
 import { ICustomUser } from "@/context/auth-provider";
 import { Router } from "expo-router";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { theme } from "@/constants/theme";
 import { hp, wp } from "@/helpers/common";
 import { has } from "react-native-reanimated/lib/typescript/createAnimatedComponent/utils";
 import Avatar from "@/components/avatar";
 import moment from "moment";
-import { Ellipsis } from "lucide-react-native";
+import {
+  Ellipsis,
+  HeartIcon,
+  MessageSquareMore,
+  Share,
+} from "lucide-react-native";
 import RenderHTML from "react-native-render-html";
 import { getSupabaseFileUrl } from "@/services/imageService";
 import { Image } from "expo-image";
 import { Video } from "expo-av";
+import { createPostLike, removePostLike } from "@/services/postService";
+import { useEffect, useState } from "react";
 
 interface IPostCardProps {
   item: any;
@@ -32,9 +39,43 @@ const PostCard = ({
     elevation: 1,
   };
 
+  const [likes, setLikes] = useState([]);
+
+  useEffect(() => {
+    setLikes(item?.postLIkes);
+  }, []);
+
   const created_at = moment(item?.created_at).format("MMM D");
+  const liked = likes?.filter((like) => like?.userId === currentUser?.id)[0];
   console.log(item);
   const openPostDetails = () => {};
+
+  const onLike = async () => {
+    if (liked) {
+      // remove like
+
+      const updatedLikes = likes.filter(
+        (like: any) => like.userId !== currentUser?.id,
+      );
+
+      setLikes([...updatedLikes]);
+      const res = await removePostLike(item?.id, currentUser?.id as string);
+      if (!res?.success) {
+        Alert.alert("Like", "Fail to like post");
+      }
+    } else {
+      const data = {
+        userId: currentUser?.id,
+        postId: item?.id,
+      };
+
+      setLikes([...likes, data]);
+      const res = await createPostLike(data);
+      if (!res?.success) {
+        Alert.alert("Like", "Fail to like post");
+      }
+    }
+  };
   return (
     <View style={[styles.container, hasShadow && shadowStyles]}>
       <View style={styles.header}>
@@ -85,6 +126,32 @@ const PostCard = ({
           isLooping
         />
       )}
+
+      <View style={styles.footer}>
+        <View style={styles.footerButton}>
+          <TouchableOpacity onPress={onLike}>
+            <HeartIcon
+              fill={liked ? theme.colors.rose : "transparent"}
+              size={24}
+              color={liked ? theme.colors.rose : theme.colors.textLight}
+            />
+          </TouchableOpacity>
+          <Text style={styles.count}>{likes?.length}</Text>
+        </View>
+
+        <View style={styles.footerButton}>
+          <TouchableOpacity>
+            <MessageSquareMore size={24} color={theme.colors.textLight} />
+          </TouchableOpacity>
+          <Text style={styles.count}>{0}</Text>
+        </View>
+        <View style={styles.footerButton}>
+          <TouchableOpacity>
+            <Share size={24} color={theme.colors.textLight} />
+          </TouchableOpacity>
+          <Text style={styles.count}>{0}</Text>
+        </View>
+      </View>
     </View>
   );
 };

@@ -88,7 +88,7 @@ const NewPost = () => {
     }
 
     const data = {
-      file,
+      file: file,
       body: bodyRef.current,
       userId: user?.id,
     };

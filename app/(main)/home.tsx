@@ -16,19 +16,46 @@ import Avatar from "@/components/avatar";
 import { useEffect, useState } from "react";
 import { fetchPosts } from "@/services/postService";
 import PostCard from "@/components/post-card";
+import Loading from "@/components/loading";
+import { supabase } from "@/lib/supabase";
+import { getUserData } from "@/services/userService";
 
-let limit = 1;
+let limit = 0;
 const Home = () => {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<any>([]);
+  const [hasMore, setHasMore] = useState(true);
+
+  const handlePostEvent = async (payload: any) => {
+    console.log(payload);
+    if (payload.eventType == "INSERT" && payload?.new?.id) {
+      const newPost = { ...payload.new };
+      const res = await getUserData(newPost.userId);
+      newPost.user = res.success ? res.data : {};
+      setPosts((prevPosts: any) => [newPost, ...prevPosts]);
+    }
+  };
 
   useEffect(() => {
-    getPosts();
+    const postChannel = supabase
+      .channel("posts")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "posts" },
+        handlePostEvent,
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(postChannel);
+    };
   }, []);
 
   const getPosts = async () => {
-    limit = limit + 10;
+    if (!hasMore) return null;
+    limit = limit + 4;
     const res = await fetchPosts(limit);
     if (res.success) {
+      if (posts?.length === res?.data?.length) setHasMore(false);
       // @ts-ignore
       setPosts(res?.data);
     }
@@ -67,11 +94,26 @@ const Home = () => {
           data={posts}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.listStyle}
+          onEndReached={() => {
+            getPosts();
+          }}
+          onEndReachedThreshold={0}
           // @ts-ignore
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <PostCard item={item} currentUser={user} router={router} />
           )}
+          ListFooterComponent={
+            hasMore ? (
+              <View style={{ marginVertical: !posts.length ? 200 : 30 }}>
+                <Loading />
+              </View>
+            ) : (
+              <View style={{ marginVertical: 30 }}>
+                <Text style={styles.noPosts}>No more posts</Text>
+              </View>
+            )
+          }
         />
       </View>
     </ScreenWrapper>
@@ -120,6 +162,7 @@ const styles = StyleSheet.create({
     fontSize: hp(2),
     textAlign: "center",
     color: theme.colors.text,
+    paddingBottom: 20,
   },
   pill: {
     position: "absolute",
