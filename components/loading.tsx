@@ -1,7 +1,15 @@
 import { theme } from "@/constants/theme";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, ActivityIndicatorProps } from "react-native";
 
-const Loading = ({ size = "large", color = theme.colors.primary }) => {
+interface ILoaderProps {
+  size?: ActivityIndicatorProps["size"];
+  color?: string;
+}
+
+const Loading = ({
+  size = "large",
+  color = theme.colors.primary,
+}: ILoaderProps) => {
   return <ActivityIndicator size={size} color={color} />;
 };
 

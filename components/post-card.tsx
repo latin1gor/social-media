@@ -1,23 +1,30 @@
 import { ICustomUser } from "@/context/auth-provider";
 import { Router } from "expo-router";
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Share,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { theme } from "@/constants/theme";
-import { hp, wp } from "@/helpers/common";
-import { has } from "react-native-reanimated/lib/typescript/createAnimatedComponent/utils";
+import { hp, stripHtmlTags, wp } from "@/helpers/common";
 import Avatar from "@/components/avatar";
 import moment from "moment";
 import {
   Ellipsis,
   HeartIcon,
   MessageSquareMore,
-  Share,
+  Share as ShareIcon,
 } from "lucide-react-native";
 import RenderHTML from "react-native-render-html";
-import { getSupabaseFileUrl } from "@/services/imageService";
+import { downloadFile, getSupabaseFileUrl } from "@/services/imageService";
 import { Image } from "expo-image";
 import { Video } from "expo-av";
 import { createPostLike, removePostLike } from "@/services/postService";
 import { useEffect, useState } from "react";
+import Loading from "@/components/loading";
 
 interface IPostCardProps {
   item: any;
@@ -39,16 +46,21 @@ const PostCard = ({
     elevation: 1,
   };
 
-  const [likes, setLikes] = useState([]);
-
+  const [likes, setLikes] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLikes(item?.postLIkes);
   }, []);
 
   const created_at = moment(item?.created_at).format("MMM D");
-  const liked = likes?.filter((like) => like?.userId === currentUser?.id)[0];
+  const liked = likes?.filter(
+    (like: any) => like?.userId === currentUser?.id,
+  )[0];
   console.log(item);
-  const openPostDetails = () => {};
+
+  const openPostDetails = () => {
+    router.push({ pathname: "/post-details", params: { postId: item.id } });
+  };
 
   const onLike = async () => {
     if (liked) {
@@ -75,6 +87,17 @@ const PostCard = ({
         Alert.alert("Like", "Fail to like post");
       }
     }
+  };
+
+  const onShare = async () => {
+    const content = { message: stripHtmlTags(item?.body) };
+    if (item?.file) {
+      setLoading(true);
+      // @ts-ignore
+      content.url = await downloadFile(getSupabaseFileUrl(item?.file)?.uri);
+      setLoading(false);
+    }
+    Share.share(content);
   };
   return (
     <View style={[styles.container, hasShadow && shadowStyles]}>
@@ -141,15 +164,25 @@ const PostCard = ({
 
         <View style={styles.footerButton}>
           <TouchableOpacity>
-            <MessageSquareMore size={24} color={theme.colors.textLight} />
+            <MessageSquareMore
+              size={24}
+              color={theme.colors.textLight}
+              onPress={openPostDetails}
+            />
           </TouchableOpacity>
           <Text style={styles.count}>{0}</Text>
         </View>
         <View style={styles.footerButton}>
-          <TouchableOpacity>
-            <Share size={24} color={theme.colors.textLight} />
-          </TouchableOpacity>
-          <Text style={styles.count}>{0}</Text>
+          {loading ? (
+            <Loading size={"small"} />
+          ) : (
+            <>
+              <TouchableOpacity onPress={onShare}>
+                <ShareIcon size={24} color={theme.colors.textLight} />
+              </TouchableOpacity>
+              <Text style={styles.count}>{0}</Text>
+            </>
+          )}
         </View>
       </View>
     </View>
