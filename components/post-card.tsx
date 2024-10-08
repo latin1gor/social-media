@@ -31,6 +31,7 @@ interface IPostCardProps {
   currentUser: ICustomUser | null;
   router: Router;
   hasShadow?: boolean;
+  showMoreIcon?: boolean;
 }
 
 const PostCard = ({
@@ -38,6 +39,7 @@ const PostCard = ({
   currentUser,
   router,
   hasShadow = true,
+  showMoreIcon = true,
 }: IPostCardProps) => {
   const shadowStyles = {
     shadowOffset: { width: 0, height: 2 },
@@ -52,6 +54,8 @@ const PostCard = ({
     setLikes(item?.postLIkes);
   }, []);
 
+  console.log("post item comments", item?.comments);
+
   const created_at = moment(item?.created_at).format("MMM D");
   const liked = likes?.filter(
     (like: any) => like?.userId === currentUser?.id,
@@ -59,6 +63,7 @@ const PostCard = ({
   console.log(item);
 
   const openPostDetails = () => {
+    if (!showMoreIcon) return null;
     router.push({ pathname: "/post-details", params: { postId: item.id } });
   };
 
@@ -115,9 +120,11 @@ const PostCard = ({
             <Text style={styles.postTime}>{created_at}</Text>
           </View>
         </View>
-        <TouchableOpacity onPress={openPostDetails}>
-          <Ellipsis size={hp(3.4)} strokeWidth={3} color={"black"} />
-        </TouchableOpacity>
+        {showMoreIcon && (
+          <TouchableOpacity>
+            <Ellipsis size={hp(3.4)} strokeWidth={3} color={"black"} />
+          </TouchableOpacity>
+        )}
       </View>
 
       {/*Post body & media */}
@@ -170,7 +177,7 @@ const PostCard = ({
               onPress={openPostDetails}
             />
           </TouchableOpacity>
-          <Text style={styles.count}>{0}</Text>
+          <Text style={styles.count}>{item?.comments[0]?.count || 0}</Text>
         </View>
         <View style={styles.footerButton}>
           {loading ? (
