@@ -55,5 +55,19 @@ export const uploadFile = async (
 };
 
 const getFilePath = (folderName: string, isImage: boolean) => {
-  return `/${folderName}/${new Date().getTime()}${isImage ? ".png" : "mp4"}`;
+  return `/${folderName}/${new Date().getTime()}${isImage ? ".png" : ".mp4"}`;
+};
+
+export const downloadFile = async (url: any) => {
+  try {
+    const { uri } = await FileSystem.downloadAsync(url, getLocalFilePath(url));
+    return uri;
+  } catch (e) {
+    console.error("Error Download image file:", url);
+  }
+};
+
+export const getLocalFilePath = (filePath: string): any => {
+  const filename = filePath.split("/").pop();
+  return `${FileSystem.documentDirectory}${filename}`;
 };

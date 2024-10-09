@@ -5,7 +5,9 @@ import { supabase } from "@/lib/supabase";
 import AuthProvider from "@/context/auth-provider";
 import { User } from "@supabase/auth-js";
 import { getUserData } from "@/services/userService";
+import { LogBox } from "react-native";
 
+LogBox.ignoreLogs(["Warning: TNodeChildrenRenderer", ""]);
 const _layout = () => {
   return (
     <AuthProvider>
@@ -20,7 +22,7 @@ const MainLayout = () => {
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((_event, session) => {
-      console.log("Session: ", session?.user?.id);
+      // console.log("Session: ", session?.user?.id);
 
       if (session) {
         setAuth(session?.user);
@@ -38,7 +40,14 @@ const MainLayout = () => {
     if (res.success) setUserData({ ...res.data, email });
   };
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen
+        name={"(main)/post-details"}
+        options={{ presentation: "modal" }}
+      />
+    </Stack>
+  );
 };
 
 export default _layout;
