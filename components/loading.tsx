@@ -1,12 +1,16 @@
-import {theme} from "@/constants/theme";
-import {ActivityIndicator} from "react-native";
-import exp from "node:constants";
+import { theme } from "@/constants/theme";
+import { ActivityIndicator, ActivityIndicatorProps } from "react-native";
 
-
-const Loading = ({size = "large", color = theme.colors.primary}) => {
-    return (
-        <ActivityIndicator size={size} color={color} />
-    )
+interface ILoaderProps {
+  size?: ActivityIndicatorProps["size"];
+  color?: string;
 }
 
-export default Loading
+const Loading = ({
+  size = "large",
+  color = theme.colors.primary,
+}: ILoaderProps) => {
+  return <ActivityIndicator size={size} color={color} />;
+};
+
+export default Loading;

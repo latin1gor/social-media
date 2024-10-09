@@ -1,4 +1,5 @@
 import {
+  Alert,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -22,14 +23,15 @@ import { ImagePickerAsset, ImagePickerOptions } from "expo-image-picker";
 import { Image } from "react-native";
 import { getSupabaseFileUrl } from "@/services/imageService";
 import { Video } from "expo-av";
+import { createOrUpdatePost } from "@/services/postService";
 
 type FileType = ImagePickerAsset | null | string | any;
 
 const NewPost = () => {
   const { user } = useAuth();
 
-  const bodyRef = useRef(null);
-  const editorRef = useRef(null);
+  const bodyRef = useRef("");
+  const editorRef = useRef<any>("");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<FileType>();
@@ -60,13 +62,11 @@ const NewPost = () => {
     if (!file) return null;
     return typeof file === "object";
   };
-  console.log(file);
 
   const getFileType = (file: FileType) => {
     if (!file) return null;
     if (isLocalFile(file)) return file.type;
 
-    console.log(file);
     // check image or video for the remote file
     if (file.includes("postImage")) {
       return "image";
@@ -81,7 +81,34 @@ const NewPost = () => {
     return getSupabaseFileUrl(file as string)?.uri;
   };
 
-  const onSubmit = async () => {};
+  const onSubmit = async () => {
+    if (!bodyRef.current && !file) {
+      Alert.alert("Post", "Please enter the all fields (text and media)");
+      return;
+    }
+
+    const data = {
+      file: file,
+      body: bodyRef.current,
+      userId: user?.id,
+    };
+
+    // create post
+    setLoading(true);
+
+    const res = await createOrUpdatePost(data);
+    setLoading(false);
+    console.log(res);
+
+    if (res?.success) {
+      setFile(null);
+      bodyRef.current = "";
+      editorRef.current.setContentHTML("");
+      router.back();
+    } else {
+      Alert.alert("Post", res?.msg);
+    }
+  };
   return (
     <ScreenWrapper>
       <View style={styles.container}>
@@ -116,6 +143,8 @@ const NewPost = () => {
             <View style={styles.file}>
               {getFileType(file) === "video" ? (
                 <Video
+                  // @ts-ignore
+                  resizeMode={"cover"}
                   style={{ flex: 1 }}
                   useNativeControls
                   isLooping
@@ -151,7 +180,7 @@ const NewPost = () => {
         <Button
           buttonStyle={{ height: hp(6.2) }}
           hasShadow={false}
-          loading={false}
+          loading={loading}
           title={"Post"}
           onPress={onSubmit}
         />
